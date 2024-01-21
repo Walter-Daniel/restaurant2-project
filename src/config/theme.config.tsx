@@ -6,7 +6,8 @@ type Props = {
 }
 
 enum themePalette {
-    BG = "#000000",
+    BG = "#ebebeb",
+    BG_RED = "#831010",
     PINK = "#f72585",
     FONT_GLOBAL = "'Montserrat', sans-serif"
 
@@ -32,6 +33,28 @@ const theme = createTheme({
                     textTransform: 'none',
                     borderRadius: '15rem'
                 }
+            }
+        },
+        MuiAppBar:{
+            defaultProps:{
+                style:{
+                    backgroundColor: themePalette.BG_RED
+                }
+            }
+        },
+        MuiDrawer:{
+            defaultProps:{
+                style:{
+                    
+                }
+            },
+            styleOverrides: {
+                paper:{
+                    backgroundColor: themePalette.BG,
+                    color: "#000",
+                },
+                
+                
             }
         }
     }
