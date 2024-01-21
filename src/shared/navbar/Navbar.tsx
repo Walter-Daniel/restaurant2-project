@@ -8,7 +8,24 @@ interface Props {
   }
   
   const drawerWidth = 240;
-  const navItems = ['Inicio', 'Iniciar Sesión', 'Registrarse'];
+//   const navItems = ['Inicio', 'Iniciar Sesión', 'Registrarse'];
+  const navItems = [
+    {
+        title: "Inicio",
+        navegation: "/",
+        btn: "contained"
+    },
+    {
+        title: "Iniciar Sesión",
+        navegation: "/login",
+        btn: "contained"
+    },
+    {
+        title: "Registrarse",
+        navegation: "/register",
+        btn: "outlined"
+    },
+  ];
 
 export const Navbar:React.FC<Props> = (props:Props) => {
 
@@ -27,13 +44,13 @@ export const Navbar:React.FC<Props> = (props:Props) => {
             <Divider style={{backgroundColor: "#dad7cd" }}/>
             <List>
                 {navItems.map((item) => (
-                    <ListItem key={item} disablePadding>
+                    <ListItem key={item.title} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center', 
                                               "&:hover": {
                                                     bgcolor: "#dad7cd",
                                                 } 
                                              }}>
-                            <ListItemText primary={item}/>
+                            <ListItemText primary={item.title}/>
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -73,8 +90,8 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
                             {navItems.map((item) => (
-                                <Button key={item} sx={{color:"#fff"}}>
-                                {item}
+                                <Button key={item.title} sx={{color:"#fff"}} variant={item.btn}>
+                                    {item.title}
                                 </Button>
                             ))}
                         </Stack>
