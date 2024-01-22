@@ -1,12 +1,10 @@
 import { Container, Button, Grid, Paper, Box, Typography, TextField } from '@mui/material';
-// import { useNotification } from '../context/notification.context';
-// import { loginValidate } from '../utilities/validateForm';
 import { Link, useNavigate } from 'react-router-dom';
 import loginBG from '../../assets/auth/login.jpg'
 
-// import { startLogin } from '../redux/auth/thunk';
-// import { useAppDispatch } from '../redux/hooks';
 import { useFormik } from 'formik';
+import { useNotification } from '../../context/notification.context';
+import { loginValidate } from '../../utilities/FormValidation';
 
 export type LoginType = {
   email: string;
@@ -19,18 +17,19 @@ export const LoginPage = () => {
  
   // const { getSuccess } = useNotification();
 
-  // const formik = useFormik<LoginType>({
-  //   initialValues: {
-  //    email: '',
-  //    password:''
-  //   },
-  //   validationSchema: loginValidate,
-  //   onSubmit: (values: LoginType) => {
-  //     getSuccess(JSON.stringify(values))
-  //     dispatch(startLogin(values)).then((ok) => {if(ok) return navigate("/") })
-  //     // 
-  //   },
-  // });
+  const formik = useFormik<LoginType>({
+    initialValues: {
+     email: '',
+     password:''
+    },
+    validationSchema: loginValidate,
+    onSubmit: (values: LoginType) => {
+      // getSuccess(JSON.stringify(values))
+      // dispatch(startLogin(values)).then((ok) => {if(ok) return navigate("/") })
+      // 
+      console.log(values)
+    },
+  });
 
   return (
       <Container maxWidth="lg">
@@ -46,7 +45,7 @@ export const LoginPage = () => {
               <Paper sx={{ padding: '1.2em', borderRadius: '0.5em',height:'80vh', display:'flex', flexDirection: 'column', justifyContent:'center' }}>
                 <h2>Iniciar Sesión</h2>
                 <Box component="form" 
-                // onSubmit={formik.handleSubmit}
+                onSubmit={formik.handleSubmit}
                 >
                   <TextField 
                     id='email'
@@ -56,11 +55,11 @@ export const LoginPage = () => {
                     type='text'
                     fullWidth 
                     sx={{ mt:2, mb:1.5 }} 
-                    // value={formik.values.email}
-                    // onChange={formik.handleChange}
-                    // onBlur={formik.handleBlur}
-                    // error={formik.touched.email && Boolean(formik.errors.email)}
-                    // helperText={formik.touched.email && formik.errors.email}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.email && Boolean(formik.errors.email)}
+                    helperText={formik.touched.email && formik.errors.email}
                     />
                   <TextField 
                     id='password'
@@ -70,11 +69,11 @@ export const LoginPage = () => {
                     type='password'
                     fullWidth 
                     sx={{ mt:1.5, mb:1.5 }} 
-                    // value={formik.values.password}
-                    // onChange={formik.handleChange}
-                    // onBlur={formik.handleBlur}
-                    // error={formik.touched.password && Boolean(formik.errors.password)}
-                    // helperText={formik.touched.password && formik.errors.password}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.password && Boolean(formik.errors.password)}
+                    helperText={formik.touched.password && formik.errors.password}
                     />
                   <Button 
                     fullWidth 
@@ -94,7 +93,6 @@ export const LoginPage = () => {
               </Paper>
             </Grid>
             <Grid item xs={6} maxHeight='80vh' boxShadow={1} borderRadius='10px'>
-              {/* <img className='bg-authentication' src={loginBG} alt="" /> */}
               <img className='bg-authentication' src={loginBG} alt="" /> 
             </Grid>
         </Grid>
