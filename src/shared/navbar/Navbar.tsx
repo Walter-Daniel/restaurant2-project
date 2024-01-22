@@ -50,7 +50,7 @@ interface Props {
 export const Navbar:React.FC<Props> = (props:Props) => {
 
     // const navigate = useNavigate();
-    const isAuth = useAppSelector((state) => state.authReducer.isAuth );
+    const {isAuth} = useAppSelector((state) => state.authReducer );
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,8 +58,6 @@ export const Navbar:React.FC<Props> = (props:Props) => {
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
-
-    console.log(isAuth)
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>

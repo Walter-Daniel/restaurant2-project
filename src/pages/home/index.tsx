@@ -1,8 +1,21 @@
+import { useEffect } from "react";
+import { products } from "../../api/products";
 import { useAppSelector } from "../../redux/hooks";
 
 
+
 export const HomePage = () => {
-  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
+
+  useEffect(() => {
+    products.getAll().then((r) => {
+      console.log(r.data.allProducts)
+    }).catch((e) =>{
+      console.log(e)
+    });
+  },[])
+  
+  console.log(products)
+  const {isAuth} = useAppSelector((state) => state.authReducer);
   return (
 
     <div style={{ marginTop: '4rem' }}>
