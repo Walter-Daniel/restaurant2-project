@@ -2,6 +2,8 @@ import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem,
 import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useState } from 'react'
+// import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../redux/hooks';
 
 interface Props {
     window?: () => Window;
@@ -9,7 +11,25 @@ interface Props {
   
   const drawerWidth = 240;
 //   const navItems = ['Inicio', 'Iniciar Sesión', 'Registrarse'];
-  const navItems = [
+  const onlineItems = [
+    {
+        title: "Inicio",
+        navegation: "/",
+        btn: "contained"
+    },
+    {
+        title: "Carrito",
+        navegation: "/cart",
+        btn: "contained"
+    },
+    {
+        title: "Cerrar sesión",
+        navegation: "/login",
+        btn: "outlined"
+    },
+  ];
+
+  const offlineItems = [
     {
         title: "Inicio",
         navegation: "/",
@@ -29,12 +49,17 @@ interface Props {
 
 export const Navbar:React.FC<Props> = (props:Props) => {
 
+    // const navigate = useNavigate();
+    const isAuth = useAppSelector((state) => state.authReducer.isAuth );
+
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
+
+    console.log(isAuth)
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -43,7 +68,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
             </Typography>
             <Divider style={{backgroundColor: "#dad7cd" }}/>
             <List>
-                {navItems.map((item) => (
+                {((isAuth) ? onlineItems : offlineItems).map((item) => (
                     <ListItem key={item.title} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center', 
                                               "&:hover": {
@@ -89,7 +114,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     </Grid>
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
-                            {navItems.map((item) => (
+                            {(isAuth ? onlineItems : offlineItems).map((item) => (
                                 <Button key={item.title} sx={{color:"#fff"}}>
                                     {item.title}
                                 </Button>
