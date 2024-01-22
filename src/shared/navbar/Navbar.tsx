@@ -90,7 +90,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
                             {navItems.map((item) => (
-                                <Button key={item.title} sx={{color:"#fff"}} variant={item.btn}>
+                                <Button key={item.title} sx={{color:"#fff"}}>
                                     {item.title}
                                 </Button>
                             ))}
