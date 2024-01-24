@@ -73,7 +73,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                                               "&:hover": {
                                                     bgcolor: "#dad7cd",
                                                 } 
-                                             }}>
+                                             }} onClick={() => navigate(`${item.navegation}`)} >
                             <ListItemText primary={item.title}/>
                         </ListItemButton>
                     </ListItem>
