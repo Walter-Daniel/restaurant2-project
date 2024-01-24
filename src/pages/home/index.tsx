@@ -1,16 +1,39 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useEffect, useState } from "react";
+import { products } from '../../api/products';
+import { Product } from "./products.interfaces";
+import { Grid } from "@mui/material";
+import { CardComponent } from "../../components";
+
 
 
 export const HomePage = () => {
-  const isAuth = useAppSelector((state) => state.authReducer.isAuth);
+
+  const [cardProducts, setCardProducts ] = useState<Product[] | null>(null)
+
+  useEffect(() => {
+    products.getAll().then((r) => {
+      setCardProducts(r.data.allProducts);
+    }).catch((e) =>{
+      console.log(e)
+    });
+  },[])
+  
   return (
 
     <div style={{ marginTop: '4rem' }}>
       {
-        isAuth  ? 
-                <h1>HOLAAAAAAAAAAAAAAAAAAAAA</h1>
-                :
-                <h1>False</h1>
+        cardProducts !== null? (
+          <Grid container spacing={2} direction="row">
+            {
+              cardProducts!.map((item) =>(
+                <Grid item xs={3}>
+                  <CardComponent name={item.name} price={item.price} detail={item.detail} key={item._id}/>
+
+                </Grid>
+              ))
+            }
+          </Grid>
+        ): <h1>Cargando...</h1>
       }
     </div>
 

@@ -4,6 +4,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../redux/hooks';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
     window?: () => Window;
@@ -37,20 +38,20 @@ interface Props {
     },
     {
         title: "Iniciar Sesión",
-        navegation: "/login",
+        navegation: "login",
         btn: "contained"
     },
     {
         title: "Registrarse",
-        navegation: "/register",
+        navegation: "register",
         btn: "outlined"
     },
   ];
 
 export const Navbar:React.FC<Props> = (props:Props) => {
 
-    // const navigate = useNavigate();
-    const isAuth = useAppSelector((state) => state.authReducer.isAuth );
+    const navigate = useNavigate();
+    const {isAuth} = useAppSelector((state) => state.authReducer );
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -58,8 +59,6 @@ export const Navbar:React.FC<Props> = (props:Props) => {
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
     };
-
-    console.log(isAuth)
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
@@ -115,7 +114,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
                             {(isAuth ? onlineItems : offlineItems).map((item) => (
-                                <Button key={item.title} sx={{color:"#fff"}}>
+                                <Button key={item.title} sx={{color:"#fff"}} onClick={() => navigate(`${item.navegation}`)}>
                                     {item.title}
                                 </Button>
                             ))}
