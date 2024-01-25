@@ -1,10 +1,11 @@
 import { Container, Button, Grid, Paper, Box, Typography, TextField } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import loginBG from '../../assets/auth/login.jpg'
 
 import { useFormik } from 'formik';
-import { useNotification } from '../../context/notification.context';
 import { loginValidate } from '../../utilities/FormValidation';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { login } from '../../redux/slices/auth.slice';
 
 export type LoginType = {
   email: string;
@@ -12,8 +13,9 @@ export type LoginType = {
 }
 
 export const LoginPage = () => {
-  // const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const {isAuth} = useAppSelector((state) => state.authReducer);
  
   // const { getSuccess } = useNotification();
 
@@ -25,13 +27,14 @@ export const LoginPage = () => {
     validationSchema: loginValidate,
     onSubmit: (values: LoginType) => {
       // getSuccess(JSON.stringify(values))
-      // dispatch(startLogin(values)).then((ok) => {if(ok) return navigate("/") })
-      // 
+      dispatch(login());
+      navigate('/');
+      // dispatch(login(values)).then((ok) => {if(ok) return navigate("/") })
       console.log(values)
     },
   });
 
-  return (
+  return isAuth ? <Navigate to = "/" /> : (
       <Container maxWidth="lg">
         <Grid 
           container 

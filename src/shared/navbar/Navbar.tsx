@@ -3,8 +3,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
+import { logout } from '../../redux/slices/auth.slice';
 
 interface Props {
     window?: () => Window;
@@ -22,12 +23,7 @@ interface Props {
         title: "Carrito",
         navegation: "/cart",
         btn: "contained"
-    },
-    {
-        title: "Cerrar sesión",
-        navegation: "/login",
-        btn: "outlined"
-    },
+    }
   ];
 
   const offlineItems = [
@@ -52,6 +48,12 @@ export const Navbar:React.FC<Props> = (props:Props) => {
 
     const navigate = useNavigate();
     const {isAuth} = useAppSelector((state) => state.authReducer );
+    const dispath = useAppDispatch();
+
+    const handlerLogout = () => {
+        dispath(logout());
+        navigate('/login')
+    }
 
     const { window } = props;
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -118,6 +120,13 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                                     {item.title}
                                 </Button>
                             ))}
+                            {
+                                (isAuth && (
+                                    <Button key="cerrar sesión" variant="contained"  sx={{color:"#fff"}} onClick={()=> handlerLogout()}>
+                                        Cerrar sesión
+                                    </Button>
+                                ))
+                            }
                         </Stack>
                     </Grid>
                 </Grid>
