@@ -6,7 +6,7 @@ type Props = {
 }
 
 enum themePalette {
-    BG = "#ebebeb",
+    BG = "#f9f6f4",
     BG_RED = "#831010",
     PINK = "#d90429",
     FONT_GLOBAL = "'Montserrat', sans-serif"
