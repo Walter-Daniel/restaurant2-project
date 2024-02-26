@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../redux/slices/auth.slice';
+import logo from '/logo.png';
 
 interface Props {
     window?: () => Window;
@@ -64,9 +65,16 @@ export const Navbar:React.FC<Props> = (props:Props) => {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-                Bon Appetit
-            </Typography>
+            <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'0.5rem'}}>
+                <img src={logo} alt="Logo Bon Appétit" style={{ height: '2.9rem' }} />
+                <Typography
+                    variant="h1"
+                    component="div"
+                    sx={{ textTransform:'uppercase', fontSize:'1.5rem', fontWeight:'600'  }}
+                >
+                    Bon <span style={{ color:'#d90429' }}>Appétit</span>
+                </Typography>
+            </Box>
             <Divider style={{backgroundColor: "#dad7cd" }}/>
             <List>
                 {((isAuth) ? onlineItems : offlineItems).map((item) => (
@@ -87,7 +95,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
     const container = window !== undefined ? () => window().document.body : undefined;
   return (
     <Box sx={{ display: 'flex' }}>
-        <AppBar component="nav">
+        <AppBar component="nav" elevation={0}>
             <Toolbar>
                 <IconButton
                 color="inherit"
@@ -104,25 +112,26 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     justifyContent="space-between"
                     alignItems="center"
                 >
-                    <Grid item>
+                    <Grid item sx={{ display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+                        <img src={logo} alt="Logo Bon Appétit" style={{ height: '2.9rem' }} />
                         <Typography
-                            variant="h6"
+                            variant="h1"
                             component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                            sx={{ flexGrow: 1, display: { sm: 'block', textTransform:'uppercase', fontSize:'2rem', fontWeight:'600' } }}
                         >
-                            Food
+                            Bon <span style={{ color:'#d90429' }}>Appétit</span>
                         </Typography>
                     </Grid>
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
                             {(isAuth ? onlineItems : offlineItems).map((item) => (
-                                <Button key={item.title} sx={{color:"#fff"}} onClick={() => navigate(`${item.navegation}`)}>
+                                <Button key={item.title} variant="text" sx={{color:"#000", fontWeight:'600'}} onClick={() => navigate(`${item.navegation}`)}>
                                     {item.title}
                                 </Button>
                             ))}
                             {
                                 (isAuth && (
-                                    <Button key="cerrar sesión" variant="contained"  sx={{color:"#fff"}} onClick={()=> handlerLogout()}>
+                                    <Button key="cerrar sesión" variant="text"  sx={{color:"#000"}} onClick={()=> handlerLogout()}>
                                         Cerrar sesión
                                     </Button>
                                 ))

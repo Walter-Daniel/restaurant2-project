@@ -4,6 +4,7 @@ import { Product } from "./products.interfaces";
 import { Grid } from "@mui/material";
 import { CardComponent } from "../../components";
 import { CardGrid } from "../../components/CardSkeleton";
+import HeroComponent from "../../components/hero";
 
 
 
@@ -21,21 +22,26 @@ export const HomePage = () => {
   
   return (
 
-    <div style={{ marginTop: '4rem' }}>
-      {
-        cardProducts !== null? (
-          <Grid container spacing={2} direction="row" key="hola">
-            {
-              cardProducts!.map((item) =>(
-                <Grid item xs={3} key={item._id}>
-                  <CardComponent name={item.name} price={item.price} detail={item.detail} id={item._id}/>
-                </Grid>
-              ))  
-            }
-          </Grid>
-        ): <CardGrid />
-      }
-    </div>
+    <>
+
+    <HeroComponent />
+    
+      <div style={{ marginTop: '4rem' }}>
+          {
+            cardProducts !== null? (
+              <Grid container spacing={2} direction="row" key="hola">
+                {
+                  cardProducts!.map((item) =>(
+                    <Grid item xs={3} key={item._id}>
+                      <CardComponent name={item.name} price={item.price} detail={item.detail} id={item._id}/>
+                    </Grid>
+                  ))  
+                }
+              </Grid>
+            ): <CardGrid />
+          }
+        </div>
+    </>
 
   )
 }
