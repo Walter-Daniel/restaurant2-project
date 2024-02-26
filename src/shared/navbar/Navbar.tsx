@@ -1,5 +1,6 @@
-import { AppBar, Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, Toolbar, Typography } from '@mui/material';
+import { Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, Toolbar, Typography, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
@@ -11,6 +12,11 @@ import logo from '/logo.png';
 interface Props {
     window?: () => Window;
   }
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
   
   const drawerWidth = 240;
 //   const navItems = ['Inicio', 'Iniciar Sesión', 'Registrarse'];
@@ -44,6 +50,12 @@ interface Props {
         btn: "outlined"
     },
   ];
+
+  const AppBar = styled(MuiAppBar, {
+
+  })<AppBarProps>(({ theme }) => ({
+    zIndex: theme.zIndex.drawer + 1,
+  }));
 
 export const Navbar:React.FC<Props> = (props:Props) => {
 
