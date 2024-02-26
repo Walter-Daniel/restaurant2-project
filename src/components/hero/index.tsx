@@ -1,32 +1,23 @@
 import React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Grid, Typography, Container, Box, Button } from '@mui/material';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Grid, Typography, Box, Button } from '@mui/material';
+import { Link } from 'react-router-dom'; 
 
-// Replace with your actual restaurant images
-import image1 from '../../assets/pizzas/hamburguesa.png';
 import image2 from '../../assets/pizzas/pizza.png';
-import image3 from '../../assets/pizzas/milanesa.png';
 
 const RestaurantHero: React.FC = () => {
   const theme = useTheme();
 
   const styles = {
     hero: {
-    //   backgroundImage: `url(${image1})`, 
-    //   backgroundSize: 'cover',
-      // backgroundPosition: 'center',
       height: '100vh',
       display: 'flex',
       alignItems: 'center',
-      color: theme.palette.getContrastText(theme.palette.background.default), // Ensure text is readable over image
+      color: theme.palette.getContrastText(theme.palette.background.default)
     },
     heroContent: {
       display: 'flex',
-      // justifyContent: 'space-between',
       alignItems: 'center',
-      // maxWidth: 'lg', // Limit container width for responsiveness
-      // mx: 'auto', // Add margin for centering
     },
     leftSection: {
       display: 'flex',
@@ -36,7 +27,6 @@ const RestaurantHero: React.FC = () => {
     rightSection: {
       display: 'flex',
       flexDirection: 'center',
-  
       alignItems: 'center',
     },
     title: {
@@ -47,11 +37,6 @@ const RestaurantHero: React.FC = () => {
     button: {
       variant: 'contained',
     },
-    seccionDerecha: {
-      // display: 'flex',
-      // alignItems: 'center',
-      // position: 'relative',
-    },
     circulo: {
       width: '25rem',
       height: '25rem',
@@ -61,26 +46,7 @@ const RestaurantHero: React.FC = () => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    imagenes: {
-      position: 'absolute',
-      top: '-25px', // Ajusta para colocar las imágenes sobre el círculo
-      left: '-25px', // Ajusta para centrar las imágenes alrededor del círculo
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      height: '100%',
-      width: '100%',
-    },
-    imagen: {
-      width: '75px',
-      height: '75px',
-      borderRadius: '50%',
-      border: '2px solid #fff',
-      objectFit: 'cover',
-      filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 3))'
-    },
-    rectangulo: {
+    rectangle: {
       position: 'absolute',
       right: 0,
       top: 70,
@@ -114,10 +80,10 @@ const RestaurantHero: React.FC = () => {
             </Button>
           </Link>
         </Box>
-        <Box sx={styles.rectangulo} zIndex={-100} />
+        <Box sx={styles.rectangle} zIndex={-100} />
       </Grid>
       <Grid item xs={12} sm={6} sx={styles.heroContent}>
-        <Box sx={styles.rightSection} justifyContent={'center'} width='100%'>
+        <Box sx={styles.rightSection} width='100%' height='100%'>
           <img src={image2} alt="Restaurant Image 2" style={{height:'80vh', width: '100%', objectFit:'contain', filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5))' }} />
         </Box>
       </Grid>
