@@ -38,16 +38,12 @@ const theme = createTheme({
         MuiAppBar:{
             defaultProps:{
                 style:{
-                    backgroundColor: themePalette.BG_RED
-                }
-            }
-        },
-        MuiDrawer:{
-            defaultProps:{
-                style:{
-                    
+                    backgroundColor: themePalette.BG,
+                    color: 'black'
                 }
             },
+        },
+        MuiDrawer:{
             styleOverrides: {
                 paper:{
                     backgroundColor: themePalette.BG,
