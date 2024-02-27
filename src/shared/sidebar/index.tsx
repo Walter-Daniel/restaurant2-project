@@ -1,12 +1,9 @@
-import * as React from 'react';
 import { useNavigate } from 'react-router-dom';          
+import { useAppStore } from '../../appStore';
 
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, Box, List, CssBaseline, Divider, IconButton } from '@mui/material';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText, Box, List, CssBaseline, Divider } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
-
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PeopleIcon from '@mui/icons-material/People';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
@@ -42,9 +39,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   ...theme.mixins.toolbar,
 }));
-
-
-
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -88,18 +82,14 @@ const items = [
 
 
 export default function Sidebar() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
+  const open = useAppStore((state) => state.dopen);
 
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <IconButton onClick={() => setOpen(!open)}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
