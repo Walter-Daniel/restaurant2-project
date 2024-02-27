@@ -1,23 +1,31 @@
-import { Box, Typography } from '@mui/material';
+import { Grid, Box, Paper, Typography, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { ProductsTable } from "../../components/ProductsTable";
+import { ProductsForm } from "../../components/ProductsForm";
+import { ModalComponent } from "../../components/ModalComponent";
+
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(2),
+//   textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 export const Products = () => {
   return (
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <Typography variant='h2'>Productos</Typography>
-            <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non
-            enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-            imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus.
-            Convallis convallis tellus id interdum velit laoreet id donec ultrices.
-            Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra
-            nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum
-            leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis
-            feugiat vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-            sapien faucibus et molestie ac.
-            </Typography>
-        </Box>
-    )
+    <Box sx={{ flexGrow: 1, width: '100%' }}>
+      <Stack direction='row' spacing={2} alignItems='center'>
+        <Typography variant='h3' sx={{ padding:'2rem', textTransform:'uppercase', fontWeight:'900' }}>Productos</Typography>
+        <ModalComponent children={<ProductsForm />} title="Crear Producto" btnStyle="contained" btnName="Crear Producto"/>
+      </Stack>
+
+      <Grid container spacing={2} sx={{ width: '100%', justifyContent: 'center'  }}>
+        <Grid item xs={12}>
+          <Item><ProductsTable /></Item>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 }
