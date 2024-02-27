@@ -1,6 +1,7 @@
 import { Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, Toolbar, Typography, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { useAppStore } from '../../appStore';
 
 import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
@@ -51,17 +52,18 @@ interface AppBarProps extends MuiAppBarProps {
     },
   ];
 
-  const AppBar = styled(MuiAppBar, {
-
-  })<AppBarProps>(({ theme }) => ({
+const AppBar = styled(MuiAppBar, {})<AppBarProps>(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
-  }));
+}));
 
 export const Navbar:React.FC<Props> = (props:Props) => {
 
     const navigate = useNavigate();
     const {isAuth} = useAppSelector((state) => state.authReducer );
     const dispath = useAppDispatch();
+
+    const updateOpen = useAppStore((state) => state.updateOpen);
+    const dopen = useAppStore((state) => state.dopen);
 
     const handlerLogout = () => {
         dispath(logout());
@@ -113,11 +115,20 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                 color="inherit"
                 aria-label="open drawer"
                 edge="start"
+                onClick={()=>updateOpen(!dopen)}
+                sx={{ mr: 2}}
+                >
+                    <MenuIcon />
+                </IconButton>
+                {/* <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
                 onClick={handleDrawerToggle}
                 sx={{ mr: 2, display: { sm: 'none' } }}
                 >
-                <MenuIcon />
-                </IconButton>
+                    <MenuIcon />
+                </IconButton> */}
                 <Grid
                     container
                     direction="row"

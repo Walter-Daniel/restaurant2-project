@@ -9,7 +9,11 @@ export const DashboardLayout = () => {
     <>
     <Box sx={{ display: 'flex' }}>
         <Sidebar />
+      <Box sx={{ marginTop: '3rem'}}>
         <Outlet />
+
+      </Box>
+
     </Box>
     </>
   )
