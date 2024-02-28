@@ -9,7 +9,7 @@ export const productValidation = yup.object({
         .matches(namePattern, 'Este campo solo puede contener letras y espacios')
         .min(5, 'El campo debe tener un min. de 5 caracteres')
         .max(30, 'El campo debe tener un max. de 30 caracteres'),
-    description: yup.string()
+    detail: yup.string()
         .trim()
         .required('Campo requerido')
         .matches(namePattern, 'Este campo solo puede contener letras y espacios')
@@ -26,6 +26,6 @@ export const productValidation = yup.object({
     promotion: yup.boolean(),
     image: yup.string()
         .trim()
-        .required('Campo requerido')
+        // .required('Campo requerido')
         .max(40, 'El campo debe tener un max. de 30 caracteres'),
   });
