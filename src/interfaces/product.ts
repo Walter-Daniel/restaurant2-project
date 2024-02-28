@@ -11,8 +11,6 @@ export interface Product {
     category: Category;
     active: boolean;
     promo: boolean;
-    createdAt: string;
-    __v: number;
   }
   
  export interface ProductsResponse {

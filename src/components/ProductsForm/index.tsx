@@ -34,7 +34,7 @@ export const ProductsForm: React.FC = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      description: '',
+      detail: '',
       price: '',
       category: 'sandwich',
       active: false,
@@ -44,6 +44,7 @@ export const ProductsForm: React.FC = () => {
     validationSchema: productValidation,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
+      console.log(values)
     },
   });
 
@@ -65,10 +66,10 @@ export const ProductsForm: React.FC = () => {
             />
             <TextField
               label="Descripción"
-              name="description"
+              name="detail"
               variant="outlined"
               margin="normal"
-              value={formik.values.description}
+              value={formik.values.detail}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               multiline
