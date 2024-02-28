@@ -25,8 +25,6 @@ export interface Order {
     user: User;
     total: number;
     status: string;
-    createdAt: string;
-    __v: number;
   }
   
  export interface OrdersResponse {

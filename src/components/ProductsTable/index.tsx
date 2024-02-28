@@ -80,7 +80,7 @@ export const ProductsTable = <T extends DataObject>({ data, columns }: Props<T>)
               {columns.map((column, index) => (
                 <StyledTableCell key={index}>{column.label}</StyledTableCell>
               ))}
-              <StyledTableCell align="right">Action</StyledTableCell>
+              <StyledTableCell>Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
