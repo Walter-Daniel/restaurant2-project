@@ -1,5 +1,5 @@
-import * as Yup from "yup";
 import { useFormik } from "formik";
+import { productValidation } from "../../utilities/ProductValidation";
 import {
   TextField,
   MenuItem,
@@ -11,7 +11,6 @@ import {
   InputLabel,
 } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
 
 
 const currencies = [
@@ -28,15 +27,7 @@ const currencies = [
     label: 'Empanadas',
   },
 ]
-const validationSchema = Yup.object({
-  name: Yup.string().required("El nombre es obligatorio"),
-  description: Yup.string(),
-  price: Yup.number().required("El precio es obligatorio"),
-  category: Yup.string(),
-  active: Yup.boolean(),
-  promotion: Yup.boolean(),
-  image: Yup.string(),
-});
+
 
 export const ProductsForm: React.FC = () => {
 
@@ -50,7 +41,7 @@ export const ProductsForm: React.FC = () => {
       promotion: false,
       image: File,
     },
-    validationSchema: validationSchema,
+    validationSchema: productValidation,
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
