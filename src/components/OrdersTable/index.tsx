@@ -1,105 +1,141 @@
-import { styled } from "@mui/material/styles";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell, { tableCellClasses } from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Button, Stack } from "@mui/material";
+import * as React from 'react';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import { Button, Stack, styled, Paper, Typography, TableRow, TableHead, TableContainer, TableBody, Table, Collapse, IconButton, Box   } from '@mui/material';
 
-//iconos
+import { Order } from '../../interfaces/order';
+import { ModalComponent } from '../ModalComponent';
+import { ProductsForm } from '../ProductsForm';
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import { ModalComponent } from "../ModalComponent";
-import { ProductsForm } from "../ProductsForm";
-import { Order } from "../../interfaces/order";
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
 
 const styles = {
-  update: {
-    borderRadius: "50%",
-    minWidth: "10px",
-    width: "35px",
-    height: "35px",
-    backgroundColor: "#06d6a0",
-    color: "#fff",
-  },
-  delete: {
-    borderRadius: "50%",
-    minWidth: "10px",
-    width: "35px",
-    height: "35px",
-    backgroundColor: "#db092a",
-    color: "#fff",
-  },
-};
+    update: {
+      borderRadius: "50%",
+      minWidth: "10px",
+      width: "35px",
+      height: "35px",
+      backgroundColor: "#06d6a0",
+      color: "#fff",
+    },
+    delete: {
+      borderRadius: "50%",
+      minWidth: "10px",
+      width: "35px",
+      height: "35px",
+      backgroundColor: "#db092a",
+      color: "#fff",
+    },
+  };
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+function Row({row}: { row: Order }) {
+  const [open, setOpen] = React.useState(false);
 
-export const OrdersTable = ({ data }: { data: Order[] }) => {
   return (
-    <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>ID</StyledTableCell>
-              <StyledTableCell>Products</StyledTableCell>
-              <StyledTableCell>Status</StyledTableCell>
-              <StyledTableCell>Total</StyledTableCell>
-              <StyledTableCell>User</StyledTableCell>
-              <StyledTableCell>Action</StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-                  {
-                    data.map((el) =>(
-                      <StyledTableRow>   
-                        <StyledTableCell>{el._id}</StyledTableCell>
-                        <StyledTableCell>
-                            {
-                                el.products.map(el => (
-                                    <>
-                                        <span>{el.productId.name}</span><br />
-                                        <span>Cantidad: {el.quantity}</span><br />
-                                    </>
-                                ))
-                            }
-                        </StyledTableCell>
-                        <StyledTableCell>{el.status}</StyledTableCell>
-                        <StyledTableCell>{el.total}</StyledTableCell>
-                        <StyledTableCell>{el.user._id}</StyledTableCell>
-                        <StyledTableCell align="right">
-                          <Stack direction="row" spacing={1}>
-                            <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
-                            <Button style={styles.delete}><DeleteIcon /></Button>
-                          </Stack>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    ))
-                  }
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </>
+    <React.Fragment>
+      <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+        <TableCell>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell component="th" scope="row">
+          {row._id}
+        </TableCell>
+        <TableCell align="right">
+            {
+                row.products.map(el => (
+                    <Typography variant='body2' key={row._id + el.productId._id}>
+                        {el.productId.name}
+                    </Typography>
+                ))
+            }
+        </TableCell>
+        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="right">{row.total}</TableCell>
+        <TableCell align="right">{row.user.fullName}</TableCell>
+        <TableCell align="right">
+          <Stack direction="row" spacing={1} justifyContent={'end'}>
+            <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
+            <Button style={styles.delete}><DeleteIcon /></Button>
+          </Stack>
+      </TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom component="div">
+                Detalle de la Orden
+              </Typography>
+              <Table size="small" aria-label="purchases">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>ProductID</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="right">Amount</TableCell>
+                    <TableCell align="right">Total price ($)</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {row.products.map((product) => (
+                    <TableRow key={product.productId._id}>
+                      <TableCell component="th" scope="row">
+                        {product._id}
+                      </TableCell>
+                      <TableCell>{product.productId.name}</TableCell>
+                      <TableCell align="right">{product.quantity}</TableCell>
+                      <TableCell align="right">
+                        Precio individual
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
   );
-};
+}
 
+export default function OrdersTable({ data }: { data: Order[] }) {
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="collapsible table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell />
+            <StyledTableCell>ID</StyledTableCell>
+            <StyledTableCell align="right">Products</StyledTableCell>
+            <StyledTableCell align="right">Status</StyledTableCell>
+            <StyledTableCell align="right">Total</StyledTableCell>
+            <StyledTableCell align="right">User</StyledTableCell>
+            <StyledTableCell align="right">Action</StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map((row) => (
+            <Row key={row._id} row={row} />
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}

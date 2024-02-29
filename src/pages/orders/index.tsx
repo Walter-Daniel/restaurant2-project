@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import { ProductsForm } from "../../components/ProductsForm";
 import { ModalComponent } from "../../components/ModalComponent";
 import { Order } from '../../interfaces/order';
-import { OrdersTable } from '../../components/OrdersTable';
+import OrdersTable from '../../components/OrdersTable';
 
 
 
@@ -12,6 +12,7 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(2),
   color: theme.palette.text.secondary,
+  marginLeft: '1rem'
 }));
 
 const orderData: Order[] = [
@@ -108,7 +109,11 @@ export const Orders = () => {
 
       <Grid container spacing={2} sx={{ width: '100%', justifyContent: 'center'  }}>
         <Grid item xs={12}>
-          <Item><OrdersTable data={orderData}/></Item>
+          <Item>
+
+          <OrdersTable data={orderData}/>
+
+          </Item>
         </Grid>
       </Grid>
     </Box>
