@@ -2,8 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../appStore';
 
 import { styled, Theme, CSSObject } from '@mui/material/styles';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, Box, List, CssBaseline, Divider } from '@mui/material';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText, Box, List, Divider } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
+
 import PeopleIcon from '@mui/icons-material/People';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
@@ -57,6 +58,13 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+const StyledListItem = styled(ListItem)(() => ({
+  '&:hover': {
+    backgroundColor: 'gold',
+    color: 'black',
+  },
+}));
+
 const items = [
   {
       title: "Dashboard",
@@ -87,14 +95,13 @@ export default function Sidebar() {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} style={{ backgroundColor:'red' }}>
         <DrawerHeader>
         </DrawerHeader>
         <Divider />
         <List>
           {items.map((item) => (
-            <ListItem key={item.title} disablePadding sx={{ display: 'block' }} onClick={() =>navigate(`${item.navegation}`)}>
+            <StyledListItem key={item.title} disablePadding sx={{ display: 'block' }} onClick={() =>navigate(`${item.navegation}`)}>
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -113,7 +120,7 @@ export default function Sidebar() {
                 </ListItemIcon>
                 <ListItemText primary={item.title} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
-            </ListItem>
+            </StyledListItem>
           ))}
         </List>
       </Drawer>

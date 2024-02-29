@@ -46,12 +46,10 @@ const theme = createTheme({
         MuiDrawer:{
             styleOverrides: {
                 paper:{
-                    backgroundColor: themePalette.BG,
-                    color: "#000",
-                },
-                
-                
-            }
+                    backgroundColor: 'white',
+                    color: 'black',
+                },   
+            },
         }
     }
 })
