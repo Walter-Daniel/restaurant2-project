@@ -1,4 +1,4 @@
-import { instance } from "./base.api";
+import instance  from "./base.api";
 
 export const products = {
     getAll: function(){

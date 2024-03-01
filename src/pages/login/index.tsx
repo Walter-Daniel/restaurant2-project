@@ -1,5 +1,5 @@
 import { Container, Button, Grid, Paper, Box, Typography, TextField, Alert } from '@mui/material';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate} from 'react-router-dom';
 import loginBG from '../../assets/auth/login.jpg'
 
 import { useFormik } from 'formik';
@@ -14,7 +14,7 @@ export type LoginType = {
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const {isAuth, errorMessage} = useAppSelector((state) => state.authReducer);
  
   // const { getSuccess } = useNotification();

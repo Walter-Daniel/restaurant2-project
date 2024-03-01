@@ -8,9 +8,20 @@ import { Products } from "../pages/products"
 import { DashboardPage } from "../pages/Dashboard"
 import { Orders } from "../pages/orders"
 import { Users } from "../pages/users"
+import { useEffect } from "react"
+import { checkAuthToken } from "../redux/thunk/auth.thunk"
+import { useAppDispatch } from "../redux/hooks"
 
 
 export const AppRouter = () => {
+  const dispatch = useAppDispatch();
+
+
+  useEffect(() => {
+   dispatch(checkAuthToken())
+  }, [dispatch])
+  
+  
   return (
     <Routes>
         <Route path="/" element={<RouterLayout />}>
