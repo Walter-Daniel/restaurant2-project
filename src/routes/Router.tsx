@@ -16,13 +16,12 @@ export const AppRouter = () => {
         <Route path="/" element={<RouterLayout />}>
           <Route path="/" element={<HomePage />}/>
           <Route path="/admin" element={<DashboardLayout/>}>
-          <Route path="/admin/" element={<DashboardPage/>}/>
-          <Route path="/admin/products" element={<Products/>}/>
-          <Route path="/admin/orders" element={<Orders/>}/>
-          <Route path="/admin/users" element={<Users/>}/>
+            <Route path="/admin/" element={<DashboardPage/>}/>
+            <Route path="/admin/products" element={<Products/>}/>
+            <Route path="/admin/orders" element={<Orders/>}/>
+            <Route path="/admin/users" element={<Users/>}/>
+          </Route>
         </Route>
-        </Route>
-        
         <Route path="/login" element={<LoginPage />}/>
         <Route path="/register" element={<RegisterPage />}/>
     </Routes>

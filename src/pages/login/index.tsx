@@ -1,11 +1,11 @@
-import { Container, Button, Grid, Paper, Box, Typography, TextField } from '@mui/material';
+import { Container, Button, Grid, Paper, Box, Typography, TextField, Alert } from '@mui/material';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import loginBG from '../../assets/auth/login.jpg'
 
 import { useFormik } from 'formik';
 import { loginValidate } from '../../utilities/FormValidation';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { login } from '../../redux/slices/auth.slice';
+import { loginThunk } from '../../redux/thunk/auth.thunk';
 
 export type LoginType = {
   email: string;
@@ -15,7 +15,7 @@ export type LoginType = {
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const {isAuth} = useAppSelector((state) => state.authReducer);
+  const {isAuth, errorMessage} = useAppSelector((state) => state.authReducer);
  
   // const { getSuccess } = useNotification();
 
@@ -27,10 +27,9 @@ export const LoginPage = () => {
     validationSchema: loginValidate,
     onSubmit: (values: LoginType) => {
       // getSuccess(JSON.stringify(values))
-      dispatch(login());
-      navigate('/');
+      dispatch(loginThunk(values));
+      // navigate('/');
       // dispatch(login(values)).then((ok) => {if(ok) return navigate("/") })
-      console.log(values)
     },
   });
 
@@ -84,6 +83,9 @@ export const LoginPage = () => {
                     variant='contained'
                     sx={{ mt:1.5, mb:3 }}
                     >Iniciar Sesión</Button>
+                </Box>
+                <Box display={errorMessage ? errorMessage : 'none'}>
+                  <Alert severity='error' >{errorMessage}</Alert>
                 </Box>
                 <Box>
                   <Typography>

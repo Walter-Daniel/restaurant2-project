@@ -1,17 +1,17 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { login } from "../slices/auth.slice";
-import { loginUser } from "../../services/auth.services";
+import { login, logout } from '../slices/auth.slice';
+import { loginUser } from '../../services/auth.services';
+import { Dispatch } from 'redux';
 
-export const loginThunk = createAsyncThunk(
-    'auth/login',
-    async (credentials: { email: string; password: string }, { dispatch }) => {
-        try {
-          const user = await loginUser(credentials);
-          console.log(user)
-          dispatch(login());
-        } catch (error) {
-          console.error(error);
-          throw error;
-        }
+export const loginThunk = (credentials: { email: string; password: string }) => {
+  return async(dispatch:Dispatch) => {
+    const result = await loginUser(credentials);
+    if(result.ok) {
+      const { token, user } = result;
+      localStorage.setItem('token', token);
+      dispatch(login(user));
+    } else {
+      localStorage.clear();
+      dispatch(logout(result.errorMessage));
     }
-)
+  }
+};
