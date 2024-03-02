@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from "react-router-dom"
+import {  Route, Routes } from "react-router-dom"
 import { HomePage } from "../pages/home"
 import { LoginPage } from "../pages/login"
 import { RouterLayout } from "../shared/RouterLayout"
@@ -10,38 +10,37 @@ import { Orders } from "../pages/orders"
 import { Users } from "../pages/users"
 import { useEffect } from "react"
 import { checkAuthToken } from "../redux/thunk/auth.thunk"
-import { useAppDispatch, useAppSelector } from "../redux/hooks"
+import { useAppDispatch} from "../redux/hooks"
+import { PrivateRoute, PublicRoute } from "./RoutesConditions"
+import { Error404 } from "../pages/Error"
 
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
-  const {status, user} = useAppSelector((state) => state.authReducer);
-
 
   useEffect(() => {
    dispatch(checkAuthToken())
   }, [dispatch])
   
-  
   return (
     <Routes>
-    <Route path="/" element={<RouterLayout />}>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/admin" element={<DashboardLayout />}>
-        {user.role === "admin" ? (
-          <>
-            <Route index element={<DashboardPage />} />
-            <Route path="products" element={<Products />} />
-            <Route path="orders" element={<Orders />} />
-            <Route path="users" element={<Users />} />
-          </>
-        ) : (
-          <Navigate to="/" replace />
-        )}
+      
+      <Route path="/" element={<RouterLayout />}>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/admin" element={<DashboardLayout />}>
+          <Route index element={<PrivateRoute><DashboardPage /> </PrivateRoute>} />
+          <Route path="products" element={<PrivateRoute><Products /></PrivateRoute>} />
+          <Route path="orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
+          <Route path="users" element={<PrivateRoute><Users /></PrivateRoute>} />  
+        </Route>   
+
       </Route>
-    </Route>
-    <Route path="/login" element={<LoginPage />} />
-    <Route path="/register" element={<RegisterPage />} />
-  </Routes>
+
+      <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+      <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+      <Route path="*" element={<Error404 />} />
+
+    </Routes>
   )
 }

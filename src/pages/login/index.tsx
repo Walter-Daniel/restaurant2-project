@@ -1,11 +1,11 @@
-import { Container, Button, Grid, Paper, Box, Typography, TextField, Alert } from '@mui/material';
-import { Link, Navigate } from 'react-router-dom';
-import loginBG from '../../assets/auth/login.jpg'
-
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { Container, Button, Grid, Paper, Box, Typography, TextField, Alert } from '@mui/material';
+
 import { loginValidate } from '../../utilities/FormValidation';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { startLogin } from '../../redux/thunk/auth.thunk';
+import loginBG from '../../assets/auth/login.jpg'
 
 export type LoginType = {
   email: string;
@@ -14,10 +14,7 @@ export type LoginType = {
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
   const {status, errorMessage} = useAppSelector((state) => state.authReducer);
- 
-  // const { getSuccess } = useNotification();
 
   const formik = useFormik<LoginType>({
     initialValues: {
@@ -26,14 +23,11 @@ export const LoginPage = () => {
     },
     validationSchema: loginValidate,
     onSubmit: (values: LoginType) => {
-      // getSuccess(JSON.stringify(values))
       dispatch(startLogin(values));
-      // navigate('/');
-      // dispatch(login(values)).then((ok) => {if(ok) return navigate("/") })
     },
   });
 
-  return status === 'authenticated' ? <Navigate to = "/" /> : (
+  return  (
       <Container maxWidth="lg">
         <Grid 
           container 

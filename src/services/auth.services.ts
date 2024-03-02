@@ -1,4 +1,4 @@
-import { AxiosError, isAxiosError } from 'axios';
+import axios, { AxiosError, isAxiosError } from 'axios';
 import instance from "../api/base.api";
 
 interface User {
@@ -32,12 +32,24 @@ export const loginUser = async (credentials: {
 }): Promise<LoginResponse> => {
   try {
     const response = await instance.post<LoginResponseSuccess>('/auth/login', credentials);
+    // const response = await axios.post('http://localhost:3400/api/auth/login', credentials)
+    
     const { user, token } = response.data;
     return {
       ok: true,
       token: token,
       user: user
     };
+    //  fetch("http://localhost:3400/api/auth/login", {
+    //   method: "POST",
+    //   body: JSON.stringify(credentials),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .catch((error) => console.error("Error:", error))
+    //   .then((response) => console.log("Success:", response));
   } catch (error) {
     if (isAxiosError(error)) {
       const axiosError = error as AxiosError<ErrorResponse>;

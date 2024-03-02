@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 export const startLogin = (credentials: { email: string; password: string }) => {
   return async(dispatch:Dispatch) => {
     dispatch(checking());
+    console.log('QUEW ES ESTOOOOOOOOOOOOOOOOOOOOO')
     const result = await loginUser(credentials);
     if(result.ok) {
       const { token, user } = result;
@@ -20,6 +21,7 @@ export const startLogin = (credentials: { email: string; password: string }) => 
 export const checkAuthToken = () => {
   return async(dispatch:Dispatch) => {
     const token = localStorage.getItem('token');
+    console.log('=>>>>>>>>>>>>>>>>>>>>>>>>>>>>> token', token)
     if(!token) return dispatch(logout('No hay token en header'));
     try {
       const result = await checkAuthTokenApi();
