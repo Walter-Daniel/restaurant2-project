@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../redux/hooks';
 import { FC } from 'react';
-import { Typography } from '@mui/material';
+import { LoadingComponent } from '../components/LoadingComponent';
 
 type Props = {
     children: React.ReactNode,
@@ -11,9 +11,7 @@ export const PrivateRoute: FC<Props> = ({children}) => {
    
     const {user, status} = useAppSelector((state) => state.authReducer);
    if(status === 'checking'){
-      <>
-         <Typography sx={{ fontSize:'15rem' }}>GOLAAA</Typography>
-      </>
+      return <LoadingComponent />
    }else if(user.role === "ADMIN_ROLE") {
        return children;
     }else{
