@@ -7,8 +7,8 @@ import React, { useState } from 'react'
 // import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
-import { logout } from '../../redux/slices/auth.slice';
 import logo from '/logo.png';
+import { startLogout } from '../../redux/thunk/auth.thunk';
 
 interface Props {
     window?: () => Window;
@@ -59,14 +59,14 @@ const AppBar = styled(MuiAppBar, {})<AppBarProps>(({ theme }) => ({
 export const Navbar:React.FC<Props> = (props:Props) => {
 
     const navigate = useNavigate();
-    const {isAuth} = useAppSelector((state) => state.authReducer );
+    const {status} = useAppSelector((state) => state.authReducer );
     const dispath = useAppDispatch();
 
     const updateOpen = useAppStore((state) => state.updateOpen);
     const dopen = useAppStore((state) => state.dopen);
 
     const handlerLogout = () => {
-        dispath(logout());
+        dispath(startLogout());
         navigate('/login')
     }
 
@@ -91,7 +91,7 @@ export const Navbar:React.FC<Props> = (props:Props) => {
             </Box>
             <Divider style={{backgroundColor: "#dad7cd" }}/>
             <List>
-                {((isAuth) ? onlineItems : offlineItems).map((item) => (
+                {((status === 'authenticated') ? onlineItems : offlineItems).map((item) => (
                     <ListItem key={item.title} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center', 
                                               "&:hover": {
@@ -147,13 +147,13 @@ export const Navbar:React.FC<Props> = (props:Props) => {
                     </Grid>
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
-                            {(isAuth ? onlineItems : offlineItems).map((item) => (
+                            {((status === 'authenticated') ? onlineItems : offlineItems).map((item) => (
                                 <Button key={item.title} variant="text" sx={{color:"#000", fontWeight:'600'}} onClick={() => navigate(`${item.navegation}`)}>
                                     {item.title}
                                 </Button>
                             ))}
                             {
-                                (isAuth && (
+                                ((status === 'authenticated') && (
                                     <Button key="cerrar sesión" variant="text"  sx={{color:"#000"}} onClick={()=> handlerLogout()}>
                                         Cerrar sesión
                                     </Button>

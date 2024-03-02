@@ -1,43 +1,59 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-interface AuthState {
-  isAuth: boolean;
+type User = {
   email: string | null;
   fullName: string | null;
   id: string | null;
   role: string | null;
-  errorMessage: string | null;
-}
+};
+
+type AuthState = {
+  status: 'non-authenticated' | 'checking' | 'authenticated';
+  user: User;
+  errorMessage: string | undefined;
+};
+
 const initialState: AuthState= {
-  isAuth: false,
-  email: null,
-  fullName: null,
-  id: null,
-  role: null,
-  errorMessage: null
+  status: 'checking',
+  user: {
+    email: null,
+    fullName: null,
+    id: null,
+    role: null
+  },
+  errorMessage: undefined
 };
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    checking: (state) => {
+      state.status = 'checking';
+      state.user= {
+        email: null,
+        fullName: null,
+        id: null,
+        role: null
+      };
+      state.errorMessage = undefined;
+    },
     login: (state, {payload})  => {
-        state.isAuth = true,
-        state.id = payload._id,
-        state.fullName = payload.fullName,
-        state.email = payload.email,
-        state.role = payload.role,
-        state.errorMessage = null
+        state.status = 'authenticated',
+        state.user = payload.user,
+        state.errorMessage = undefined
     },
     logout: (state, {payload})  => {
-        state.isAuth = false,
-        state.id = null,
-        state.fullName = null,
-        state.email = null,
-        state.role = null
-        state.errorMessage = payload.errorMessage
+      state.status = 'non-authenticated',
+      state.user = {
+        email: null,
+        fullName: null,
+        id: null,
+        role: null
+      },
+      state.errorMessage = payload.errorMessage
     },
    },
 })
 
-export const { login, logout } = authSlice.actions
+export const { login, logout, checking } = authSlice.actions

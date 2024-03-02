@@ -1,5 +1,5 @@
 import { AxiosError, isAxiosError } from 'axios';
-import { instance } from "../api/base.api";
+import instance from "../api/base.api";
 
 interface User {
   fullName: string;
@@ -16,6 +16,7 @@ interface LoginResponseSuccess {
   ok: true;
   token: string;
   user: User;
+  message?: string;
 }
 
 interface LoginResponseError {
@@ -53,3 +54,30 @@ export const loginUser = async (credentials: {
     }
   }
 };
+
+export const checkAuthTokenApi = async() => {
+  try {
+    const response = await instance.get('/auth/renew');
+    const { token, user } = response.data;
+    return {
+      ok: true,
+      token,
+      user
+    }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      const errorMessage = axiosError.response?.data.message || 'An error occurred';
+      return {
+        ok: false,
+        errorMessage: errorMessage
+      };
+    } else {
+      return {
+        ok: false,
+        errorMessage: 'An error occurred'
+      };
+    }
+  }
+
+}
