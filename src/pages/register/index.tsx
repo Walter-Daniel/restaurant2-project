@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Container, Button, Grid, Paper, Box, Typography, TextField } from '@mui/material';
 // import { registerValidate } from '../utilities/validateForm';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 // import { useFormik } from 'formik';
 // import { useNotification } from '../context/notification.context';
 import registerBG from '../../assets/auth/register.avif'
 import { useNotification } from '../../context/notification.context';
 import { registerValidate } from '../../utilities/FormValidation';
 import { useFormik } from 'formik';
+import { useAppSelector } from '../../redux/hooks';
 // import { useAppDispatch } from '../redux/hooks';
 // import { startRegisterWithEmail } from '../redux/auth';
 
@@ -23,6 +24,7 @@ export const RegisterPage = () => {
   
   // const { getSuccess,getError } = useNotification();
   // const dispatch = useAppDispatch();
+  const {status} = useAppSelector((state) => state.authReducer);
 
   const formik = useFormik<Props>({
     initialValues: {
@@ -40,7 +42,7 @@ export const RegisterPage = () => {
     }
   }); 
  
-  return (
+  return status === 'authenticated' ? <Navigate to = "/" /> :(
       <Container maxWidth="lg">
         <Grid 
           container 

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { HomePage } from "../pages/home"
 import { LoginPage } from "../pages/login"
 import { RouterLayout } from "../shared/RouterLayout"
@@ -10,11 +10,12 @@ import { Orders } from "../pages/orders"
 import { Users } from "../pages/users"
 import { useEffect } from "react"
 import { checkAuthToken } from "../redux/thunk/auth.thunk"
-import { useAppDispatch } from "../redux/hooks"
+import { useAppDispatch, useAppSelector } from "../redux/hooks"
 
 
 export const AppRouter = () => {
   const dispatch = useAppDispatch();
+  const {status, user} = useAppSelector((state) => state.authReducer);
 
 
   useEffect(() => {
@@ -24,17 +25,23 @@ export const AppRouter = () => {
   
   return (
     <Routes>
-        <Route path="/" element={<RouterLayout />}>
-          <Route path="/" element={<HomePage />}/>
-          <Route path="/admin" element={<DashboardLayout/>}>
-            <Route path="/admin/" element={<DashboardPage/>}/>
-            <Route path="/admin/products" element={<Products/>}/>
-            <Route path="/admin/orders" element={<Orders/>}/>
-            <Route path="/admin/users" element={<Users/>}/>
-          </Route>
-        </Route>
-        <Route path="/login" element={<LoginPage />}/>
-        <Route path="/register" element={<RegisterPage />}/>
-    </Routes>
+    <Route path="/" element={<RouterLayout />}>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/admin" element={<DashboardLayout />}>
+        {user.role === "admin" ? (
+          <>
+            <Route index element={<DashboardPage />} />
+            <Route path="products" element={<Products />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="users" element={<Users />} />
+          </>
+        ) : (
+          <Navigate to="/" replace />
+        )}
+      </Route>
+    </Route>
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/register" element={<RegisterPage />} />
+  </Routes>
   )
 }

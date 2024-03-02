@@ -1,11 +1,11 @@
 import { Container, Button, Grid, Paper, Box, Typography, TextField, Alert } from '@mui/material';
-import { Link, Navigate} from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import loginBG from '../../assets/auth/login.jpg'
 
 import { useFormik } from 'formik';
 import { loginValidate } from '../../utilities/FormValidation';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { loginThunk } from '../../redux/thunk/auth.thunk';
+import { startLogin } from '../../redux/thunk/auth.thunk';
 
 export type LoginType = {
   email: string;
@@ -15,7 +15,7 @@ export type LoginType = {
 export const LoginPage = () => {
   const dispatch = useAppDispatch();
   // const navigate = useNavigate();
-  const {isAuth, errorMessage} = useAppSelector((state) => state.authReducer);
+  const {status, errorMessage} = useAppSelector((state) => state.authReducer);
  
   // const { getSuccess } = useNotification();
 
@@ -27,13 +27,13 @@ export const LoginPage = () => {
     validationSchema: loginValidate,
     onSubmit: (values: LoginType) => {
       // getSuccess(JSON.stringify(values))
-      dispatch(loginThunk(values));
+      dispatch(startLogin(values));
       // navigate('/');
       // dispatch(login(values)).then((ok) => {if(ok) return navigate("/") })
     },
   });
 
-  return isAuth ? <Navigate to = "/" /> : (
+  return status === 'authenticated' ? <Navigate to = "/" /> : (
       <Container maxWidth="lg">
         <Grid 
           container 
@@ -77,12 +77,15 @@ export const LoginPage = () => {
                     error={formik.touched.password && Boolean(formik.errors.password)}
                     helperText={formik.touched.password && formik.errors.password}
                     />
-                  <Button 
-                    fullWidth 
-                    type='submit'
-                    variant='contained'
-                    sx={{ mt:1.5, mb:3 }}
-                    >Iniciar Sesión</Button>
+                    <Button 
+                      fullWidth 
+                      type='submit'
+                      variant='contained'
+                      disabled={status === 'checking'}
+                      sx={{ mt: 1.5, mb: 3 }}
+                    >
+                      {status === 'checking' ? 'CARGANDO DATOS...' : 'Iniciar Sesión'}
+                    </Button>
                 </Box>
                 <Box display={errorMessage ? errorMessage : 'none'}>
                   <Alert severity='error' >{errorMessage}</Alert>
