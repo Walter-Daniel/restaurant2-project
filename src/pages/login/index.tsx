@@ -81,7 +81,7 @@ export const LoginPage = () => {
                       {status === 'checking' ? 'CARGANDO DATOS...' : 'Iniciar Sesión'}
                     </Button>
                 </Box>
-                <Box display={errorMessage ? errorMessage : 'none'}>
+                <Box display={errorMessage ? errorMessage : 'none'} sx={{ paddingBottom: '1rem' }}>
                   <Alert severity='error' >{errorMessage}</Alert>
                 </Box>
                 <Box>

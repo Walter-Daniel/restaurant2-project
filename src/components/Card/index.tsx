@@ -12,7 +12,7 @@ type Props = {
 
 export const CardComponent: FC<Props> = ({ name, price, detail, id }) => {
 
-  const {isAuth} = useAppSelector((state) => state.authReducer);
+  const {status} = useAppSelector((state) => state.authReducer);
 
   return (
     <Card sx={{
@@ -43,7 +43,7 @@ export const CardComponent: FC<Props> = ({ name, price, detail, id }) => {
             </Typography>
         </CardContent>
         {
-            isAuth && (
+            (status === 'authenticated') && (
                 <CardActions>
                     <Button variant="contained" fullWidth>Comprar</Button>
                 </CardActions>

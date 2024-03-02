@@ -12,7 +12,7 @@ import { useEffect } from "react"
 import { checkAuthToken } from "../redux/thunk/auth.thunk"
 import { useAppDispatch} from "../redux/hooks"
 import { PrivateRoute, PublicRoute } from "./RoutesConditions"
-import { Error404 } from "../pages/Error"
+import { Error404Page } from "../pages/Error"
 
 
 export const AppRouter = () => {
@@ -24,7 +24,7 @@ export const AppRouter = () => {
   
   return (
     <Routes>
-      
+
       <Route path="/" element={<RouterLayout />}>
         <Route path="/" element={<HomePage />} />
 
@@ -39,7 +39,7 @@ export const AppRouter = () => {
 
       <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
       <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-      <Route path="*" element={<Error404 />} />
+      <Route path="*" element={<Error404Page />} />
 
     </Routes>
   )
