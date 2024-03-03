@@ -10,7 +10,6 @@ enum themePalette {
     BG_RED = "#831010",
     PINK = "#d90429",
     FONT_GLOBAL = "'Montserrat', sans-serif"
-
 }
 
 const theme = createTheme({
@@ -50,7 +49,7 @@ const theme = createTheme({
                     color: 'black',
                 },   
             },
-        }
+        },
     }
 })
 

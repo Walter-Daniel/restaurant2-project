@@ -45,9 +45,7 @@ export const startLogout = () => {
     }
 }
 
-export const startRegister = (credentials: { email: string; password: string, fullName:string }) => {
-  return async(dispatch:Dispatch) => {
-    const result = await registerUser(credentials);
-    console.log(result)
-  }
+export const startRegister = async(credentials: { email: string; password: string, fullName:string }) => {
+  const result = await registerUser(credentials);
+  console.log(result)
 }

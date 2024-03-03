@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import registerBG from '../../assets/auth/register.avif'
 import { registerValidate } from '../../utilities/FormValidation';
 import { useFormik } from 'formik';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { startRegister } from '../../redux/thunk/auth.thunk';
+import { useNotification } from '../../context/useNotification';
 
 
 export type Props = {
@@ -16,10 +16,8 @@ export type Props = {
 }
 
 export const RegisterPage = () => {
-  const dispatch = useAppDispatch();
+  const { getSuccess, getError } = useNotification();
   
-  const {status, errorMessage} = useAppSelector((state) => state.authReducer);
-
   const formik = useFormik<Props>({
     initialValues: {
       fullName: '',
@@ -28,9 +26,15 @@ export const RegisterPage = () => {
       password2: ''
     },
     validationSchema: registerValidate,
-    onSubmit: (values: Props) => {
-      const { fullName, email, password } = values;
-      dispatch(startRegister({fullName, email, password}))
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await startRegister(values);
+        resetForm();
+        getSuccess('Tu registro ha sido completado con éxito. Ya puedes iniciar sesión.')
+      } catch (error) {
+        console.error('Error en el registro:', error);
+        getError(`Error en el registro: ${error}`, )
+      }
     }
   }); 
  
