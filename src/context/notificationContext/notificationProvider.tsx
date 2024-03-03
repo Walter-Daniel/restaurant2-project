@@ -1,7 +1,7 @@
-import { FC, createContext, useState } from "react";
+import { FC, createContext, useState } from 'react';
 
 import { AlertColor } from '@mui/material';
-import { NotificationComponent } from "../components/Notification";
+import { NotificationComponent } from "../../components/Notification";
 
 
 type ContextProps = {

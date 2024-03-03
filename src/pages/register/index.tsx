@@ -5,7 +5,7 @@ import registerBG from '../../assets/auth/register.avif'
 import { registerValidate } from '../../utilities/FormValidation';
 import { useFormik } from 'formik';
 import { startRegister } from '../../redux/thunk/auth.thunk';
-import { useNotification } from '../../context/useNotification';
+import { useNotification } from '../../context/notificationContext/useNotification';
 
 
 export type Props = {

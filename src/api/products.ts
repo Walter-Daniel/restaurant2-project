@@ -1,6 +1,6 @@
 import instance  from "./base.api";
 
-export const products = {
+export const productsApi = {
     getAll: function(){
         return instance.get('/products')
     }
