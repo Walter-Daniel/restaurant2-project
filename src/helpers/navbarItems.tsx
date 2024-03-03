@@ -1,3 +1,5 @@
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 export const onlineItems = [
     {
         title: "Inicio",
@@ -5,7 +7,7 @@ export const onlineItems = [
         btn: "contained"
     },
     {
-        title: "Carrito",
+        title: <ShoppingCartIcon />,
         navegation: "/cart",
         btn: "contained"
     }
@@ -25,6 +27,6 @@ export const onlineItems = [
     {
         title: "Registrarse",
         navegation: "register",
-        btn: "outlined"
+        btn: "contained"
     },
   ];

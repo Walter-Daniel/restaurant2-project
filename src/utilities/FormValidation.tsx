@@ -14,7 +14,7 @@ export const loginValidate = yup.object().shape({
 });
 
 export const registerValidate = yup.object().shape({            
-    displayName: yup.string()
+    fullName: yup.string()
                   .trim()
                   .required('Campo requerido')
                   .matches(namePattern, 'Este campo solo puede contener letras y espacios')

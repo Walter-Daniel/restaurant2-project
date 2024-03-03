@@ -8,6 +8,11 @@ interface User {
   role: string;
 }
 
+interface newUser {
+  fullName: string;
+  email: string;
+}
+
 interface ErrorResponse {
   message: string;
 }
@@ -19,12 +24,19 @@ interface LoginResponseSuccess {
   message?: string;
 }
 
+
+interface RegisterResponseSuccess {
+  ok: true;
+  newUser: newUser;
+}
+
 interface LoginResponseError {
   ok: false;
   errorMessage: string;
 }
 
 type LoginResponse = LoginResponseSuccess | LoginResponseError;
+type RegisterResponse = RegisterResponseSuccess | LoginResponseError;
 
 export const loginUser = async (credentials: {
   email: string;
@@ -81,3 +93,32 @@ export const checkAuthTokenApi = async() => {
   }
 
 }
+
+export const registerUser = async (credentials: {
+  fullName: string;
+  email: string;
+  password: string;
+}):Promise<RegisterResponse> => {
+  try {
+    const response = await instance.post<RegisterResponseSuccess>('/auth/register', credentials);
+    const { newUser } = response.data;
+    return {
+      ok: true,
+      newUser
+    }
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const axiosError = error as AxiosError<ErrorResponse>;
+      const errorMessage = axiosError.response?.data.message || 'An error occurred';
+      return {
+        ok: false,
+        errorMessage: errorMessage
+      };
+    } else {
+      return {
+        ok: false,
+        errorMessage: 'An error occurred'
+      };
+    }
+  }
+};
