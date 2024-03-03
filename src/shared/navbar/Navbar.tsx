@@ -1,22 +1,21 @@
-import { Box, Button, Divider, Drawer, Grid, IconButton, List, ListItem, ListItemButton, ListItemText, Stack, Toolbar, Typography, styled } from '@mui/material';
+import { Box, Button, Grid, IconButton, Stack, Toolbar, Typography, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useAppStore } from '../../appStore';
 
-import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
 import { startLogout } from '../../redux/thunk/auth.thunk';
-import { offlineItems, onlineItems } from '../../helpers/navbarItems';
+
 import { DrawerComponent } from './DrawerComponent';
+import { offlineItems, onlineItems } from '../../helpers/navbarItems';
 
 
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
-
   
 
 const AppBar = styled(MuiAppBar, {})<AppBarProps>(({ theme }) => ({
@@ -71,13 +70,13 @@ export const Navbar = () => {
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
                             {((status === 'authenticated') ? onlineItems : offlineItems).map((item) => (
-                                <Button key={item.title} variant="text" sx={{color:"#000", fontWeight:'600'}} onClick={() => navigate(`${item.navegation}`)}>
+                                <Button key={item.navegation} variant="text" sx={{color:"#000", fontWeight:'600'}} color='warning' onClick={() => navigate(`${item.navegation}`)}>
                                     {item.title}
                                 </Button>
                             ))}
                             {
                                 ((status === 'authenticated') && (
-                                    <Button key="cerrar sesión" variant="text"  sx={{color:"#000"}} onClick={()=> handlerLogout()}>
+                                    <Button key="cerrar sesión" variant="contained"  sx={{color:"#000", backgroundColor:'gold',fontWeight:'600'}} color='warning' onClick={()=> handlerLogout()}>
                                         Cerrar sesión
                                     </Button>
                                 ))

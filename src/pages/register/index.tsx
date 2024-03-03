@@ -1,48 +1,44 @@
-import { useState } from 'react';
 import { Container, Button, Grid, Paper, Box, Typography, TextField } from '@mui/material';
-// import { registerValidate } from '../utilities/validateForm';
-import { Link, Navigate } from 'react-router-dom';
-// import { useFormik } from 'formik';
-// import { useNotification } from '../context/notification.context';
+import { Link } from 'react-router-dom';
+
 import registerBG from '../../assets/auth/register.avif'
-import { useNotification } from '../../context/notification.context';
 import { registerValidate } from '../../utilities/FormValidation';
 import { useFormik } from 'formik';
-import { useAppSelector } from '../../redux/hooks';
-// import { useAppDispatch } from '../redux/hooks';
-// import { startRegisterWithEmail } from '../redux/auth';
+import { startRegister } from '../../redux/thunk/auth.thunk';
+import { useNotification } from '../../context/useNotification';
 
 
 export type Props = {
-    displayName: string
+    fullName: string
     email: string;
     password: string;
     password2?: string;  
 }
 
 export const RegisterPage = () => {
+  const { getSuccess, getError } = useNotification();
   
-  // const { getSuccess,getError } = useNotification();
-  // const dispatch = useAppDispatch();
-  const {status} = useAppSelector((state) => state.authReducer);
-
   const formik = useFormik<Props>({
     initialValues: {
-      displayName: '',
+      fullName: '',
       email: '',
       password:'',
       password2: ''
     },
     validationSchema: registerValidate,
-    onSubmit: (values: Props, {resetForm}) => {
-      // dispatch(startRegisterWithEmail(values)).then( ({ok, message}) => 
-      //                                              !ok ? getError(message) : (getSuccess(message), resetForm()) )
-      //                                         .catch((error) => {throw new Error(error)});
-      console.log(values);
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await startRegister(values);
+        resetForm();
+        getSuccess('Tu registro ha sido completado con éxito. Ya puedes iniciar sesión.')
+      } catch (error) {
+        console.error('Error en el registro:', error);
+        getError(`Error en el registro: ${error}`, )
+      }
     }
   }); 
  
-  return status === 'authenticated' ? <Navigate to = "/" /> :(
+  return (
       <Container maxWidth="lg">
         <Grid 
           container 
@@ -59,18 +55,18 @@ export const RegisterPage = () => {
                 onSubmit={formik.handleSubmit}
                 >
                   <TextField 
-                    id='displayName'
-                    name= 'displayName'
+                    id='fullName'
+                    name= 'fullName'
                     label='Nombre completo' 
                     margin='normal'
                     type='text'
                     fullWidth 
                     sx={{ mt:2, mb:1.5 }} 
-                    value={formik.values.displayName}
+                    value={formik.values.fullName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    error={formik.touched.displayName && Boolean(formik.errors.displayName)}
-                    helperText={formik.touched.displayName && formik.errors.displayName}
+                    error={formik.touched.fullName && Boolean(formik.errors.fullName)}
+                    helperText={formik.touched.fullName && formik.errors.fullName}
                     />
                   <TextField 
                     id='email'

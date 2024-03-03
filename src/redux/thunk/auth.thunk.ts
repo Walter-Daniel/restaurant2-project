@@ -1,5 +1,5 @@
 import { checking, login, logout } from '../slices/auth.slice';
-import { loginUser, checkAuthTokenApi } from '../../services/auth.services';
+import { loginUser, checkAuthTokenApi, registerUser } from '../../services/auth.services';
 import { Dispatch } from 'redux';
 
 export const startLogin = (credentials: { email: string; password: string }) => {
@@ -43,4 +43,9 @@ export const startLogout = () => {
       localStorage.clear();
       dispatch(logout('Cierre de sesión'));
     }
+}
+
+export const startRegister = async(credentials: { email: string; password: string, fullName:string }) => {
+  const result = await registerUser(credentials);
+  console.log(result)
 }
