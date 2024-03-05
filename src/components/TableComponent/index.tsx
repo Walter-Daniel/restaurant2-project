@@ -16,6 +16,7 @@ import { ProductsForm } from "../ProductsForm";
 import { Product } from "../../interfaces/product";
 import { Order } from "../../interfaces/order";
 import { User } from "../../interfaces/user";
+import { getCellContent } from "../../helpers/getCellContent";
 
 
 type FieldKey<T> = keyof T;
@@ -27,7 +28,7 @@ export interface Column<T> {
   align?: "left" | "center" | "right";
 }
 
-interface Props<T extends DataObject> {
+export interface Props<T extends DataObject> {
   data: T[];
   columns: Column<T>[];
 }
@@ -70,7 +71,7 @@ const styles = {
   },
 };
 
-export const ProductsTable = <T extends DataObject>({ data, columns }: Props<T>) => {
+export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>) => {
   return (
     <>
       <TableContainer component={Paper}>
@@ -78,21 +79,21 @@ export const ProductsTable = <T extends DataObject>({ data, columns }: Props<T>)
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (
-                <StyledTableCell key={index}>{column.label}</StyledTableCell>
+                <StyledTableCell key={index} align={column.label === 'ID' ? 'left' : 'right'}>{column.label}</StyledTableCell>
               ))}
-              <StyledTableCell>Actions</StyledTableCell>
+              <StyledTableCell align="right">Actions</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row, rowIndex) => (
               <StyledTableRow key={rowIndex}>
                 {columns.map((column, colIndex) => (
-                  <StyledTableCell key={colIndex} align={column.align || 'left'}>
+                  <StyledTableCell key={colIndex} align={column.label === 'ID' ? 'left' : 'right'}>
                     {getCellContent(row, column)}
                   </StyledTableCell>
                 ))}
                 <StyledTableCell align="right">
-                  <Stack direction="row" spacing={1}>
+                  <Stack direction="row" spacing={1} justifyContent='flex-end'>
                     <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
                     <Button style={styles.delete}><DeleteIcon /></Button>
                   </Stack>
@@ -104,22 +105,4 @@ export const ProductsTable = <T extends DataObject>({ data, columns }: Props<T>)
       </TableContainer>
     </>
   );
-};
-
-const getCellContent = <T extends DataObject>(row: T, column: Column<T>): React.ReactNode => {
-  const value = row[column.field];
-
-  if (typeof value === 'object' && value !== null) {
-    let a = '';
-    // Utilizamos Object.entries para obtener las claves y valores del objeto
-    Object.entries(value).forEach(([key, val]) => {
-      if (key !== '_id') {
-        a += val;
-      }
-    });
-    return a;
-  } else {
-    return String(value);
-  }
-
 };
