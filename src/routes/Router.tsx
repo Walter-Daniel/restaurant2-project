@@ -13,6 +13,7 @@ import { checkAuthToken } from "../redux/thunk/auth.thunk"
 import { useAppDispatch} from "../redux/hooks"
 import { PrivateRoute, PublicRoute } from "./RoutesConditions"
 import { Error404Page } from "../pages/Error"
+import { Categories } from "../pages/categories"
 
 
 export const AppRouter = () => {
@@ -33,6 +34,7 @@ export const AppRouter = () => {
           <Route path="products" element={<PrivateRoute><Products /></PrivateRoute>} />
           <Route path="orders" element={<PrivateRoute><Orders /></PrivateRoute>} />
           <Route path="users" element={<PrivateRoute><Users /></PrivateRoute>} />  
+          <Route path="categories" element={<PrivateRoute><Categories /></PrivateRoute>} />  
         </Route>   
 
       </Route>

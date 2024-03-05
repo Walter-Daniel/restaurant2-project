@@ -9,3 +9,4 @@ export { OrdersTable } from './OrdersTable/index';
 export { ProductsForm } from './ProductsForm/index';
 export { TableComponent } from './TableComponent/index';
 export { OrderRow } from './OrdersTableRow/index';
+export { CardDashboard } from './CardDashboard/index';

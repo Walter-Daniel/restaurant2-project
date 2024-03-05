@@ -17,10 +17,11 @@ import { Product } from "../../interfaces/product";
 import { Order } from "../../interfaces/order";
 import { User } from "../../interfaces/user";
 import { getCellContent } from "../../helpers/getCellContent";
+import { Category } from "../../interfaces/category";
 
 
 type FieldKey<T> = keyof T;
-type DataObject = Product | Order | User;
+type DataObject = Product | Order | User | Category;
 
 export interface Column<T> {
   label: string;

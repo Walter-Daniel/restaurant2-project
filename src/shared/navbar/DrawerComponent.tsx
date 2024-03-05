@@ -56,7 +56,7 @@ export const DrawerComponent: FC<Props> = (props:Props) => {
             <Divider style={{backgroundColor: "#dad7cd" }}/>
             <List>
                 {((status === 'authenticated') ? onlineItems : offlineItems).map((item) => (
-                    <ListItem key={item.title} disablePadding>
+                    <ListItem key={item.navegation} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center', 
                                             "&:hover": {
                                                     bgcolor: "#dad7cd",

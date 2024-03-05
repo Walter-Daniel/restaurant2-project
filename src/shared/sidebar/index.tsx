@@ -9,6 +9,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import RestaurantIcon from '@mui/icons-material/Restaurant';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CategoryIcon from '@mui/icons-material/Category';
 
 const drawerWidth = 240;
 
@@ -67,25 +68,30 @@ const StyledListItem = styled(ListItem)(() => ({
 
 const items = [
   {
-      title: "Dashboard",
-      navegation: "/admin",
-      icon: <DashboardIcon />
+    title: "Dashboard",
+    navegation: "/admin",
+    icon: <DashboardIcon />
   },
+  {
+    title: "Categories",
+    navegation: "/admin/categories",
+    icon: <CategoryIcon />
+  },
+  {
+    title: "Orders",
+    navegation: "/admin/orders",
+    icon: <MenuBookIcon />
+  },
+  {
+    title: "Products",
+    navegation: "/admin/products",
+    icon: <RestaurantIcon />
+} ,
   {
       title: "Users",
       navegation: "/admin/users",
       icon: <PeopleIcon />
-  },
-  {
-      title: "Products",
-      navegation: "/admin/products",
-      icon: <RestaurantIcon />
-  },
-  {
-      title: "Orders",
-      navegation: "/admin/orders",
-      icon: <MenuBookIcon />
-  }
+  }, 
 ];
 
 

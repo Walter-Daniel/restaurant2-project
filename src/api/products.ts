@@ -5,9 +5,3 @@ export const productsApi = {
         return instance.get('/products')
     }
 };
-
-export const categoriesApi = {
-    getAll: function(){
-        return instance.get('/categories')
-    }
-}

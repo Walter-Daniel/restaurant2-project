@@ -1,9 +1,10 @@
+import { Category } from '../interfaces/category';
 import { Order } from '../interfaces/order';
 import { Product } from '../interfaces/product';
 import { User } from '../interfaces/user';
 
 type FieldKey<T> = keyof T;
-type DataObject = Product | Order | User;
+type DataObject = Product | Order | User | Category;
 
 export interface Column<T> {
     label: string;
