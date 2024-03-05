@@ -1,7 +1,6 @@
 import { Box, Grid, Skeleton, Stack } from "@mui/material"
 
-
-export const CardGrid = () => {
+export const CardSkeleton = () => {
     const skeletonCard = (
         <>
             <Stack sx={{ backgroundColor: 'white', margin: '1rem' }}>

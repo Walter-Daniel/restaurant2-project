@@ -9,7 +9,7 @@ import logo from '/logo.png';
 import { startLogout } from '../../redux/thunk/auth.thunk';
 
 import { DrawerComponent } from './DrawerComponent';
-import { offlineItems, onlineItems } from '../../helpers/navbarItems';
+import { adminItems, offlineItems, onlineItems } from '../../helpers/navbarItems';
 
 
 
@@ -69,7 +69,10 @@ export const Navbar = () => {
                     </Grid>
                     <Grid item sx={{ display: { xs: 'none', sm: 'block' } }}>
                         <Stack direction="row" spacing={2}>
-                            {((status === 'authenticated') ? onlineItems : offlineItems).map((item) => (
+                           
+                            {((status === 'non-authenticated') ? offlineItems 
+                                : (status === 'authenticated' && user.role === 'USER_ROLE') 
+                                ? onlineItems : adminItems).map((item) => (
                                 <Button key={item.navegation} variant="text" sx={{color:"#000", fontWeight:'600'}} color='warning' onClick={() => navigate(`${item.navegation}`)}>
                                     {item.title}
                                 </Button>

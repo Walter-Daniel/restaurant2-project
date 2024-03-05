@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import image2 from '../../assets/pizzas/pizza.png';
 
-const RestaurantHero: React.FC = () => {
+export const RestaurantHero: React.FC = () => {
   const theme = useTheme();
 
   const styles = {
@@ -25,7 +25,7 @@ const RestaurantHero: React.FC = () => {
       paddingLeft: '3rem'
     },
     rightSection: {
-      display: 'flex',
+      display: { xs: 'none', md: 'flex' },
       flexDirection: 'center',
       alignItems: 'center',
     },
@@ -57,12 +57,10 @@ const RestaurantHero: React.FC = () => {
     },
   };
 
-  
-
   return (
   <Box sx={styles.hero} position='relative'>
     <Grid container sx={{ padding:'0 2rem' }}>
-      <Grid item xs={12} sm={6} sx={styles.heroContent}>
+      <Grid item xs={12} md={6} sx={styles.heroContent}>
         <Box sx={styles.leftSection}>
           <Typography variant="h4" sx={styles.title} color='grey' >
             Sabor en Cada Bocado
@@ -82,7 +80,7 @@ const RestaurantHero: React.FC = () => {
         </Box>
         <Box sx={styles.rectangle} zIndex={-100} />
       </Grid>
-      <Grid item xs={12} sm={6} sx={styles.heroContent}>
+      <Grid item xs={12} sm={6} style={styles.heroContent} >
         <Box sx={styles.rightSection} width='100%' height='100%'>
           <img src={image2} alt="Restaurant Image 2" style={{height:'80vh', width: '100%', objectFit:'contain', filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5))' }} />
         </Box>
@@ -91,5 +89,3 @@ const RestaurantHero: React.FC = () => {
   </Box>
   );
 };
-
-export default RestaurantHero;
