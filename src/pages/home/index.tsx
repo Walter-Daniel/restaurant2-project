@@ -1,7 +1,7 @@
 
 import { useProducts } from "../../hooks/useProducts";
-import { CardGrid } from "../../components/CardSkeleton";
-import HeroComponent from "../../components/hero";
+import { CardSkeleton } from "../../components/CardSkeleton";
+import { RestaurantHero } from "../../components/hero";
 import { ErrorComponent } from "../../components/ErrorComponent";
 
 import {Container, Grid, Typography } from "@mui/material";
@@ -33,11 +33,11 @@ export const HomePage = () => {
   return (
 
     <div>
-      <HeroComponent />
+      <RestaurantHero />
       <Container style={{ marginTop: '4rem' }}>
             
                 {(productsQuery.isLoading) 
-                        ? <CardGrid /> 
+                        ? <CardSkeleton /> 
                         :((productsQuery.isError) 
                           ? <ErrorComponent />
                           : Object.entries(productsByCategory).map(([categoryId, products]) =>(
