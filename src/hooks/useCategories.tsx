@@ -6,7 +6,6 @@ import { Category, CategoryResponse } from '../interfaces/category';
 const getCategories = async():Promise<Category[]> => {
     const response:AxiosResponse<CategoryResponse> = await productsApi.getAll();
     const { categories } = response.data;
-    console.log(categories);
     return categories;
 }
 

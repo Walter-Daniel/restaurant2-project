@@ -8,3 +8,4 @@ export { NotificationComponent } from './Notification/index';
 export { OrdersTable } from './OrdersTable/index';
 export { ProductsForm } from './ProductsForm/index';
 export { ProductsTable} from './ProductsTable/index';
+export { OrderRow } from './OrdersTableRow/index';

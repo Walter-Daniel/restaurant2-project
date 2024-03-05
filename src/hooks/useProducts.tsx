@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 const getProducts = async():Promise<Product[]> => {
     const response:AxiosResponse<ProductsResponse> = await productsApi.getAll();
     const { allProducts } = response.data;
-    console.log(allProducts);
     return allProducts;
 }
 
