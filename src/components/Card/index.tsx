@@ -12,7 +12,7 @@ type Props = {
 
 export const CardComponent: FC<Props> = ({ name, price, detail, id }) => {
 
-  const {status} = useAppSelector((state) => state.authReducer);
+  const {user} = useAppSelector((state) => state.authReducer);
 
   return (
     <Card sx={{
@@ -31,7 +31,7 @@ export const CardComponent: FC<Props> = ({ name, price, detail, id }) => {
         image={pizza}
         title={name}
         />
-        <CardContent sx={{ minHeight: 135, maxHeight:135 }}>
+        <CardContent sx={{ minHeight: 135, maxHeight:135, width: 300 }}>
             <Typography gutterBottom variant="h5" component="div">
                 {name}
             </Typography>
@@ -43,7 +43,7 @@ export const CardComponent: FC<Props> = ({ name, price, detail, id }) => {
             </Typography>
         </CardContent>
         {
-            (status === 'authenticated') && (
+            (user.role === 'USER_ROLE') && (
                 <CardActions>
                     <Button variant="contained" fullWidth>Comprar</Button>
                 </CardActions>

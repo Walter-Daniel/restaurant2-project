@@ -11,7 +11,19 @@ export const onlineItems = [
         navegation: "/cart",
         btn: "contained"
     }
-  ];
+];
+export const adminItems = [
+    {
+        title: "Inicio",
+        navegation: "/",
+        btn: "contained"
+    },
+    {
+        title: "Administración",
+        navegation: "/admin",
+        btn: "contained"
+    }
+];
 
  export const offlineItems = [
     {
@@ -29,4 +41,4 @@ export const onlineItems = [
         navegation: "register",
         btn: "contained"
     },
-  ];
+];

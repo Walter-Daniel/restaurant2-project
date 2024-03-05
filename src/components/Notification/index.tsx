@@ -1,5 +1,5 @@
-import { Alert, AlertColor, Snackbar, Typography } from '@mui/material'
 import { FC } from 'react'
+import { Alert, AlertColor, Snackbar, Typography } from '@mui/material'
 
 type Props = {
     open: boolean;

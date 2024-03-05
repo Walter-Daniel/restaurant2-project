@@ -115,7 +115,7 @@ function Row({row}: { row: Order }) {
   );
 }
 
-export default function OrdersTable({ data }: { data: Order[] }) {
+export function OrdersTable({ data }: { data: Order[] }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
