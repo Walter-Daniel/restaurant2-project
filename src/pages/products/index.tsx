@@ -1,5 +1,5 @@
-import { ProductsForm, ProductsTable, ModalComponent, LoadingComponent, ErrorComponent  } from "../../components";
-import { Column } from "../../components/ProductsTable";
+import { ProductsForm, TableComponent, ModalComponent, LoadingComponent, ErrorComponent  } from "../../components";
+import { Column } from "../../components/TableComponent";
 import { useProducts } from '../../hooks/useProducts';
 import { Product } from '../../interfaces/product';
 
@@ -38,7 +38,7 @@ export const Products = () => {
         <Grid item xs={12}>
           <Item>
             {productsQuery.isLoading ? <LoadingComponent />
-                                     :productsQuery.data ? <ProductsTable<Product> data={productsQuery.data} columns={productColumns} />
+                                     :productsQuery.data ? <TableComponent<Product> data={productsQuery.data} columns={productColumns} />
                                      :<ErrorComponent />
           
             } 

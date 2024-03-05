@@ -7,5 +7,5 @@ export { ModalComponent } from './ModalComponent/index';
 export { NotificationComponent } from './Notification/index';
 export { OrdersTable } from './OrdersTable/index';
 export { ProductsForm } from './ProductsForm/index';
-export { ProductsTable} from './ProductsTable/index';
+export { TableComponent } from './TableComponent/index';
 export { OrderRow } from './OrdersTableRow/index';
