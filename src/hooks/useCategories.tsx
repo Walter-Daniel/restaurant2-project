@@ -1,10 +1,10 @@
 import { AxiosResponse } from 'axios';
-import { productsApi } from '../api/products';
 import { useQuery } from '@tanstack/react-query';
+import { categoriesApi } from '../api/category';
 import { Category, CategoryResponse } from '../interfaces/category';
 
 const getCategories = async():Promise<Category[]> => {
-    const response:AxiosResponse<CategoryResponse> = await productsApi.getAll();
+    const response:AxiosResponse<CategoryResponse> = await categoriesApi.getAll();
     const { categories } = response.data;
     return categories;
 }
