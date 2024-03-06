@@ -18,6 +18,7 @@ import { Order } from "../../interfaces/order";
 import { User } from "../../interfaces/user";
 import { getCellContent } from "../../helpers/getCellContent";
 import { Category } from "../../interfaces/category";
+import { useState } from "react";
 
 
 type FieldKey<T> = keyof T;
@@ -73,6 +74,14 @@ const styles = {
 };
 
 export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>) => {
+
+  const [rowData, setRowData] = useState<DataObject | null>(null);
+
+  const handleRowData = (rowData:DataObject) => {
+    setRowData(rowData)
+  }
+
+  console.log(rowData)
   return (
     <>
       <TableContainer component={Paper}>
@@ -96,7 +105,7 @@ export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>
                 <StyledTableCell align="right">
                   <Stack direction="row" spacing={1} justifyContent='flex-end'>
                     <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
-                    <Button style={styles.delete}><DeleteIcon /></Button>
+                    <Button style={styles.delete} onClick={() => handleRowData(row)} ><DeleteIcon /></Button>
                   </Stack>
                 </StyledTableCell>
               </StyledTableRow>
