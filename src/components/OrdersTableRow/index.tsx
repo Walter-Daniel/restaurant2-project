@@ -31,6 +31,14 @@ const styles = {
 export function OrderRow({row}: { row: Order }) {
 
     const [open, setOpen] = useState(false);
+
+    const [dataRow, setDataRow] = useState<Order | null>(null);
+
+    const handleRowData = (rowData:Order) => {
+      setDataRow(rowData)
+    }
+
+    console.log(dataRow)
   
     return (
       <>
@@ -62,7 +70,7 @@ export function OrderRow({row}: { row: Order }) {
           <TableCell align="right">
             <Stack direction="row" spacing={1} justifyContent={'end'}>
               <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
-              <Button style={styles.delete}><DeleteIcon /></Button>
+              <Button style={styles.delete} onClick={() => handleRowData(row)}><DeleteIcon /></Button>
             </Stack>
         </TableCell>
         </TableRow>
