@@ -9,45 +9,35 @@ import {
   Select,
   FormControl,
   InputLabel,
+  Typography,
 } from "@mui/material";
+import { useCategories } from "../../hooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
-
-const currencies = [
-  {
-    value: 'pizzas',
-    label: 'Pizzas',
-  },
-  {
-    value: 'sandwich',
-    label: 'Sandwich',
-  },
-  {
-    value: 'empanadas',
-    label: 'Empanadas',
-  },
-]
-
+import { fetchProducts } from "../../redux/thunk/product.thunk";
+import { Product } from "../../interfaces/product";
+import { useAppDispatch } from "../../redux/hooks";
 
 export const ProductsForm: React.FC = () => {
+
+  const { isError, isLoading, data } = useCategories();
+
+  const dispatch = useAppDispatch()
 
   const formik = useFormik({
     initialValues: {
       name: '',
       detail: '',
-      price: '',
-      category: 'sandwich',
+      price: 0,
+      category:'',
       active: false,
-      promotion: false,
-      image: File,
+      promo: false,
+      // image: File,
     },
     validationSchema: productValidation,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      console.log(values)
+    onSubmit: (values:Omit<Product, '_id'>) => {
+      dispatch(fetchProducts(values));
     },
   });
-
 
   return (
     <div>
@@ -87,25 +77,29 @@ export const ProductsForm: React.FC = () => {
               error={!!formik.errors.price && formik.touched.price}
               helperText={formik.touched.price && formik.errors.price}
             />
-            <FormControl sx={{ margin:'1rem 0' }}>
+           {isLoading && <Typography>Cargando...</Typography>}
+           {isError && <Typography>Error al cargar categorías</Typography>}
+           {data && (
+             <FormControl sx={{ margin:'1rem 0' }}>
               <InputLabel id="category">Categoría</InputLabel>
               <Select
                 labelId="category"
                 id="demo-simple-select"
                 label="Categoría"
                 name="category"
-                defaultValue="sandwich"
+                // defaultValue="sandwich"
                 value={formik.values.category}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                {data.map((option) => (
+                  <MenuItem key={option._id} value={option._id}>
+                    {option.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
+           )}
             <FormControlLabel
               control={<Checkbox name="active" />}
               label="Activo"
@@ -114,9 +108,9 @@ export const ProductsForm: React.FC = () => {
               onBlur={formik.handleBlur}
             />
             <FormControlLabel
-              control={<Checkbox name="promotion" />}
+              control={<Checkbox name="promo"/>}
               label="Promoción"
-              checked={formik.values.promotion}
+              checked={formik.values.promo}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
