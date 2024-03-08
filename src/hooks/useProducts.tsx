@@ -3,20 +3,24 @@ import { Product, ProductsResponse } from '../interfaces/product';
 import { productsApi } from '../api/products';
 import { useQuery } from '@tanstack/react-query';
 
-const getProducts = async():Promise<Product[]> => {
-    const response:AxiosResponse<ProductsResponse> = await productsApi.getAll();
-    const { allProducts } = response.data;
-    return allProducts;
+interface Options {
+    filterKey?: string
 }
 
-export const useProducts = () => {
+const getProducts = async({filterKey}: Options) => {
+    const response:AxiosResponse<ProductsResponse> = await productsApi.getAll();
+    const { products } = response.data;
+    return products;
+}
 
-    const productsQuery = useQuery({
-        queryKey: ['products'],
-        queryFn: getProducts,
+export const useProducts = ({ filterKey }: Options) => {
+
+    const { isLoading, error, isError, data = [] } = useQuery({
+        queryKey: ['products', {filterKey}],
+        queryFn: () => getProducts({filterKey}),
         staleTime: 1000*60*60
         // refetchOnWindowFocus: false
     });
     
-    return productsQuery;
+    return {isLoading, error, isError, data}
 }

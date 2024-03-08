@@ -15,7 +15,7 @@ export const HomePage = () => {
   
   const [productsByCategory, setProductsByCategory] = useState<{ [key: string]: Product[] }>({});
 
-  const productsQuery = useProducts();
+  const productsQuery = useProducts({});
 
   useEffect(() => {
     const groupedProducts: { [key: string]: Product[] } = {};

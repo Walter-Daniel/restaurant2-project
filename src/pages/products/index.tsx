@@ -25,7 +25,7 @@ const productColumns: Column<Product>[] = [
 ];
 export const Products = () => {
 
-  const productsQuery = useProducts();
+  const productsQuery = useProducts({});
 
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>

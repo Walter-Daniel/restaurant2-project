@@ -8,21 +8,54 @@ export const useProductsMutation = () => {
 
     const productMutation = useMutation({
         mutationFn: uploadProductService,
-        onSuccess: (product) => {
-          
+
+        onMutate: (product) => {
+            
+            const optimistProduct = {_id: 'mdmddmdm', ...product}
+            //almacenar el producto en el cache del query client
             queryClient.setQueryData<Product[]>(
-                ['products', { filterKey: product }],
+                ['products', { filterKey: product.category }],
+                (old) =>{
+                    if(!old) return [optimistProduct]
+
+                    return [...old, optimistProduct]
+                }
+            );
+            
+            return {
+                optimistProduct
+            }
+        
+        },
+
+        onSuccess: (product, variables, context) => {
+            
+            queryClient.setQueryData<Product[]>(
+                ['products', { filterKey: product.category }],
                 (old) =>{
                     if(!old) return [product]
-
-                    return [...old, product]
+                    return old.map( cacheProduct => {
+                        return cacheProduct._id === context.optimistProduct.category._id ? product : cacheProduct;
+                    })
                 }
             )
 
         },
-        // onSettled: () => {
-        //     console.log('Se ejecuta despues de la carga')
-        // }
+
+        onError(error, variables, context) {
+
+            console.log({error, variables, context})
+
+            queryClient.setQueryData<Product[]>(
+                ['products', { filterKey: variables.category }],
+                (old) =>{
+                    if(!old) return [];
+                    return old.filter( cacheProduct => {
+                        return cacheProduct._id !== context?.optimistProduct.category._id
+                    })
+                }
+            )
+        },
       });
 
       return productMutation;
