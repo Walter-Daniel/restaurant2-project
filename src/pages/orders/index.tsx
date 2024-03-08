@@ -13,7 +13,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Orders = () => {
-  const ordersQuery = useOrders();
+  const {isError, isLoading, data} = useOrders();
+
+  console.log(data)
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <Stack direction='row' spacing={2} alignItems='center'>
@@ -25,12 +27,13 @@ export const Orders = () => {
         <Grid item xs={12}>
           
           <Item>
-          {ordersQuery.isLoading ? (
+          {isLoading ? (
               <LoadingComponent />
-            ) : ordersQuery.data ? (
-              <OrdersTable orders={ordersQuery.data}/>
             ) : (
-              ordersQuery.isError && <ErrorComponent />
+              // Verifica si data es null o undefined antes de renderizar OrdersTable
+              data != null ? (
+                <OrdersTable orders={data}/>
+              ) : isError && <ErrorComponent />
             )}
           
           </Item>

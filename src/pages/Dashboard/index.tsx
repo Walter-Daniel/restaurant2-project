@@ -1,4 +1,4 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { CardDashboard, ErrorComponent, LoadingComponent } from '../../components';
 import { useDashboard } from '../../hooks/useDashboard';
 import { FC } from 'react';
@@ -9,6 +9,8 @@ export const DashboardPage: FC = () => {
 
     if(isLoading) return <LoadingComponent />
     if(isError) return <ErrorComponent />
+
+    if(data! === undefined) return <Typography>'No hay data'</Typography>
 
     const { lastAdded, total } = data!;
 
