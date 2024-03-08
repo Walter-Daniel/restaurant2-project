@@ -11,31 +11,30 @@ import {
   InputLabel,
   Typography,
 } from "@mui/material";
-import { useCategories } from "../../hooks";
+import { useCategories, useProductsMutation } from "../../hooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { fetchProducts } from "../../redux/thunk/product.thunk";
 import { Product } from "../../interfaces/product";
-import { useAppDispatch } from "../../redux/hooks";
 
 export const ProductsForm: React.FC = () => {
 
   const { isError, isLoading, data } = useCategories();
-
-  const dispatch = useAppDispatch()
+  const productMutation = useProductsMutation();
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      detail: '',
-      price: 0,
+      name: 'Prueba',
+      detail: 'HOLA ASLJDLKASJ',
+      price: 3000,
       category:'',
       active: false,
       promo: false,
       // image: File,
     },
     validationSchema: productValidation,
-    onSubmit: (values:Omit<Product, '_id'>) => {
-      dispatch(fetchProducts(values));
+    onSubmit: (values:Omit<Product, '_id'>, {resetForm}) => {
+      // dispatch(fetchProducts(values));
+      productMutation.mutate(values)
+      resetForm();
     },
   });
 
