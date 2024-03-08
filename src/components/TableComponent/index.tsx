@@ -81,7 +81,7 @@ export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>
     setRowData(rowData)
   }
 
-  console.log(rowData)
+  console.log(rowData, 'producto a editar')
   return (
     <>
       <TableContainer component={Paper}>
