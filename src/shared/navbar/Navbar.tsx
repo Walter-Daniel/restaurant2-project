@@ -4,7 +4,7 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useAppStore } from '../../appStore';
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '/logo.png';
 import { startLogout } from '../../redux/thunk/auth.thunk';
 
@@ -28,6 +28,9 @@ export const Navbar = () => {
     const {status, user} = useAppSelector((state) => state.authReducer );
     const dispath = useAppDispatch();
 
+
+    const location = useLocation();
+
     const updateOpen = useAppStore((state) => state.updateOpen);
     const dopen = useAppStore((state) => state.dopen);
 
@@ -40,7 +43,7 @@ export const Navbar = () => {
     <Box sx={{ display: 'flex' }}>
         <AppBar component="nav" elevation={0}>
             <Toolbar>
-                {(user.role === 'ADMIN_ROLE') && (
+                {(user.role === 'ADMIN_ROLE' && location.pathname.includes('admin')) && (
                     <IconButton
                     color="inherit"
                     aria-label="open drawer"

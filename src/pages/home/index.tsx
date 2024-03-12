@@ -26,7 +26,6 @@ export const HomePage = () => {
       }
       groupedProducts[categoryId].push(product);
     });
-    console.log(groupedProducts)
     setProductsByCategory(groupedProducts);
   }, [productsQuery.data]);
 
