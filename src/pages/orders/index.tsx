@@ -13,9 +13,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export const Orders = () => {
+
   const {isError, isLoading, data} = useOrders();
 
-  console.log(data)
   return (
     <Box sx={{ flexGrow: 1, width: '100%' }}>
       <Stack direction='row' spacing={2} alignItems='center'>
@@ -30,7 +30,6 @@ export const Orders = () => {
           {isLoading ? (
               <LoadingComponent />
             ) : (
-              // Verifica si data es null o undefined antes de renderizar OrdersTable
               data != null ? (
                 <OrdersTable orders={data}/>
               ) : isError && <ErrorComponent />

@@ -37,7 +37,7 @@ export const useProductsMutation = () => {
         
         },
 
-        onSuccess: (product, variables, context) => {
+        onSuccess: (product, _ , context) => {
             
             queryClient.setQueryData<Product[]>(
                 ['products', {}],
