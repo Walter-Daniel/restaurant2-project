@@ -1,5 +1,4 @@
 import {  Route, Routes } from "react-router-dom"
-import { HomePage } from "../pages/home"
 import { LoginPage } from "../pages/login"
 import { RouterLayout } from "../shared/RouterLayout"
 import { RegisterPage } from "../pages/register"
@@ -14,6 +13,8 @@ import { useAppDispatch} from "../redux/hooks"
 import { PrivateRoute, PublicRoute } from "./RoutesConditions"
 import { Error404Page } from "../pages/Error"
 import { Categories } from "../pages/categories"
+import { PizzaPage } from "../pages/Pizza"
+import { MenuLayout } from "../shared/MenuLayout"
 
 
 export const AppRouter = () => {
@@ -27,7 +28,10 @@ export const AppRouter = () => {
     <Routes>
 
       <Route path="/" element={<RouterLayout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<MenuLayout />} >
+          <Route path="pizzas" element={<PizzaPage />} />
+        </Route>
+        
 
         <Route path="/admin" element={<DashboardLayout />}>
           <Route index element={<PrivateRoute><DashboardPage /> </PrivateRoute>} />

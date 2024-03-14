@@ -15,6 +15,23 @@ import { useCategories, useProductsMutation } from "../../hooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Product } from "../../interfaces/product";
 
+
+const category  :{ [key: string]: string }= {
+  "635170dcc5a32a62d410b13e": "Empanadas",
+  "6554e39035611185a1cd55fe": "Hamburguesas",
+  "63516f6fc5a32a62d410b13c": "Pizzas",
+  "63517341c3c4679da104dd3f": "Sandwiches",
+}
+
+interface Props  {
+  name: string,
+  detail: string,
+  price: number,
+  category: string,
+  active: boolean,
+  promo: boolean,
+}
+
 export const ProductsForm: React.FC = () => {
 
   const { isError, isLoading, data } = useCategories();
@@ -31,7 +48,7 @@ export const ProductsForm: React.FC = () => {
       // image: File,
     },
     validationSchema: productValidation,
-    onSubmit: (values:Omit<Product, '_id'>, {resetForm}) => {
+    onSubmit: (values:Props, {resetForm}) => {
       // dispatch(fetchProducts(values));
       productMutation.mutate(values)
       resetForm();
@@ -91,11 +108,14 @@ export const ProductsForm: React.FC = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               >
-                {data.map((option) => (
-                  <MenuItem key={option._id} value={option._id}>
-                    {option.name}
+                {
+                  Object.entries(category).map(([key, value]) => (
+                    <MenuItem key={key} value={key}>
+                    {value}
                   </MenuItem>
-                ))}
+                  ))
+                }
+                
               </Select>
             </FormControl>
            )}
