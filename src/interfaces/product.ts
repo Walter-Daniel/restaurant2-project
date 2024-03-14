@@ -18,4 +18,6 @@ export interface Product {
     message: string;
     products: Product[];
     promoProducts: Product[];
+    totalProducts: number;
+    totalPages: number;
 }
