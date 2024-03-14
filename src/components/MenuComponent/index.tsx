@@ -1,8 +1,12 @@
-import { Breadcrumbs, Link } from '@mui/material';
+import { Box, Breadcrumbs, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 
 const menuLinks = [
+  {
+    link: '/',
+    name: 'Promociones'
+  },
   {
     link: '/empanadas',
     name: 'Empanadas'
@@ -23,7 +27,7 @@ const menuLinks = [
 
 export const MenuComponent = () => {
   return (
-    <div>
+    <Box display='flex' justifyContent='center' >
         <Breadcrumbs aria-label="breadcrumb">
 
         {
@@ -40,6 +44,6 @@ export const MenuComponent = () => {
           ))
         }
         </Breadcrumbs>
-  </div>
+  </Box>
   )
 }

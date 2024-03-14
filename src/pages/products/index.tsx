@@ -38,7 +38,7 @@ export const Products = () => {
         <Grid item xs={12}>
           <Item>
             {productsQuery.isLoading ? <LoadingComponent />
-                                     :productsQuery.data ? <TableComponent<Product> data={productsQuery.data} columns={productColumns} />
+                                     :productsQuery.data ? <TableComponent<Product> data={productsQuery.data.products} columns={productColumns} />
                                      :<ErrorComponent />
           
             } 
