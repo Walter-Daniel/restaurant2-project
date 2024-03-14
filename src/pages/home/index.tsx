@@ -9,6 +9,8 @@ import { Product } from "../../interfaces/product";
 import { useEffect, useState } from "react";
 import { CardComponent } from "../../components";
 import { Box } from "@mui/system";
+import { MenuComponent } from "../../components/MenuComponent";
+import { MenuLayout } from "../../shared/MenuLayout";
 
 
 export const HomePage = () => {
@@ -33,7 +35,9 @@ export const HomePage = () => {
 
     <div>
       <RestaurantHero />
-      <Container style={{ marginTop: '4rem' }}>
+      <MenuLayout />
+      {/* <MenuComponent /> */}
+      {/* <Container style={{ marginTop: '4rem' }}>
             
                 {(productsQuery.isLoading) 
                         ? <CardSkeleton /> 
@@ -63,7 +67,7 @@ export const HomePage = () => {
                           )
                 }
      
-        </Container>
+        </Container> */}
     </div>
 
   )

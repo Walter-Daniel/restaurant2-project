@@ -1,6 +1,6 @@
 import { AxiosResponse} from "axios";
 import { productsApi } from "../api/products";
-import { Category, Product } from "../interfaces/product";
+import { Product } from "../interfaces/product";
 // import { Product } from "../interfaces/product";
 
 
@@ -15,7 +15,7 @@ export interface ProductLike {
     name: string;
     detail: string;
     price: number;
-    category: Category;
+    category: string;
     active: boolean;
     promo: boolean;
 }

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Product, ProductsResponse } from '../interfaces/product';
+import { ProductsResponse } from '../interfaces/product';
 import { productsApi } from '../api/products';
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,7 +8,8 @@ interface Options {
 }
 
 const getProducts = async({filterKey}: Options) => {
-    const response:AxiosResponse<ProductsResponse> = await productsApi.getAll();
+    const filterURL = (filterKey) ? `category=${filterKey}` : '';
+    const response:AxiosResponse<ProductsResponse> = await productsApi.getAll(filterURL);
     const { products } = response.data;
     return products;
 }

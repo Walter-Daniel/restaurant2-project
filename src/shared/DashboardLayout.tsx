@@ -11,9 +11,7 @@ export const DashboardLayout = () => {
         <Sidebar />
       <Box sx={{ marginTop: '3rem', width:'100%', height:'100%'}}>
         <Outlet />
-
       </Box>
-
     </Box>
     </>
   )
