@@ -1,47 +1,25 @@
-import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
+import { Box, Divider, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
 import { offlineItems, onlineItems } from "../../helpers/navbarItems"
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks";
 
 import logo from '/logo.png';
-import { useState, FC } from "react";
+import { FC } from "react";
 
 interface Props {
     window?: () => Window;
+    handleDrawerToggle: () => void;
   }
 
-const drawerWidth = 240;
 
-
-export const DrawerComponent: FC<Props> = (props:Props) => {
+export const DrawerComponent: FC<Props> = ({handleDrawerToggle}) => {
 
     const navigate = useNavigate();
     const {status} = useAppSelector((state) => state.authReducer );
-    const { window } = props;
-    
-    const [mobileOpen, setMobileOpen] = useState(false);
-
-    const handleDrawerToggle = () => {
-        setMobileOpen((prevState) => !prevState);
-    };
-
-    const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
 
-    <Drawer
-    container={container}
-    variant="temporary"
-    open={mobileOpen}
-    onClose={handleDrawerToggle}
-    ModalProps={{
-    keepMounted: true,
-    }}
-    sx={{
-    display: { xs: 'block', sm: 'none' },
-    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
-    }}
->
+    <>
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
         <Box sx={{ display:'flex', alignItems:'center', justifyContent:'center', padding:'0.5rem'}}>
                 <img src={logo} alt="Logo Bon Appétit" style={{ height: '2.9rem' }} />
@@ -68,7 +46,7 @@ export const DrawerComponent: FC<Props> = (props:Props) => {
                 ))}
             </List>
         </Box>
-    </Drawer>
+    </>
    
   )
 }

@@ -15,6 +15,10 @@ import { Error404Page } from "../pages/Error"
 import { Categories } from "../pages/categories"
 import { PizzaPage } from "../pages/Pizza"
 import { MenuLayout } from "../shared/MenuLayout"
+import { BurguerPage } from "../pages/Burguer"
+import { SandwichPage } from "../pages/Sandwich"
+import { EmpanadaPage } from "../pages/Empanadas"
+import { PromoPage } from "../pages/Promotion"
 
 
 export const AppRouter = () => {
@@ -29,7 +33,11 @@ export const AppRouter = () => {
 
       <Route path="/" element={<RouterLayout />}>
         <Route path="/" element={<MenuLayout />} >
+          <Route index element={<PromoPage />} />
+          <Route path="empanadas" element={<EmpanadaPage />} />
           <Route path="pizzas" element={<PizzaPage />} />
+          <Route path="hamburguesas" element={<BurguerPage />} />
+          <Route path="sandwiches" element={<SandwichPage />} />
         </Route>
         
 

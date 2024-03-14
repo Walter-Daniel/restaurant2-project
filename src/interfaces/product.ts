@@ -17,4 +17,5 @@ export interface Product {
  export interface ProductsResponse {
     message: string;
     products: Product[];
+    promoProducts: Product[];
 }

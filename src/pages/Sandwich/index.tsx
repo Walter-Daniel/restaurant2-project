@@ -3,18 +3,20 @@ import { useProducts } from '../../hooks';
 import { CardComponent, ErrorComponent, LoadingComponent } from '../../components';
 import { Box, Grid, Typography } from '@mui/material';
 
-export const PizzaPage: FC = () => {
+export const SandwichPage: FC = () => {
 
     const { isLoading, data, isError } = useProducts({
-        filterKey: "63516f6fc5a32a62d410b13c"
+        filterKey: "63517341c3c4679da104dd3f"
     });
+
   return (
     <>
        {isLoading && <LoadingComponent />}
        {isError && <ErrorComponent />}
+       
        <>
         <Box padding='1rem' >
-            <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Pizzas</Typography>
+            <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Sandwiches</Typography>
         </Box>
         <Grid container spacing={2} direction="row">
             {

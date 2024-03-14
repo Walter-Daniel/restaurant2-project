@@ -1,4 +1,4 @@
-import { Box, Button, Grid, IconButton, Stack, Toolbar, Typography, styled } from '@mui/material';
+import { Box, Button, Drawer, Grid, IconButton, Stack, Toolbar, Typography, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { useAppStore } from '../../appStore';
@@ -10,6 +10,7 @@ import { startLogout } from '../../redux/thunk/auth.thunk';
 
 import { DrawerComponent } from './DrawerComponent';
 import { adminItems, offlineItems, onlineItems } from '../../helpers/navbarItems';
+import { useState } from 'react';
 
 
 
@@ -17,12 +18,17 @@ interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
   
-
 const AppBar = styled(MuiAppBar, {})<AppBarProps>(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
 }));
 
-export const Navbar = () => {
+interface Props {
+    window?: () => Window;
+  }
+
+const drawerWidth = 240;
+
+export const Navbar = (props:Props) => {
 
     const navigate = useNavigate();
     const {status, user} = useAppSelector((state) => state.authReducer );
@@ -37,7 +43,16 @@ export const Navbar = () => {
     const handlerLogout = () => {
         dispath(startLogout());
         navigate('/login')
-    }
+    };
+    
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const handleDrawerToggle = () => {
+        setMobileOpen((prevState) => !prevState);
+      };
+      const { window } = props;
+
+    const container = window !== undefined ? () => window().document.body : undefined;
+
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -53,6 +68,19 @@ export const Navbar = () => {
                     >
                         <MenuIcon />
                     </IconButton>
+                )}
+                {!location.pathname.includes('admin') &&(
+
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        sx={{ mr: 2, display: { sm: 'none' } }}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+
                 )}
                 <Grid
                     container
@@ -93,7 +121,21 @@ export const Navbar = () => {
             </Toolbar>
         </AppBar>
         <nav>
-        <DrawerComponent />
+            <Drawer
+                container={container}
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                keepMounted: true,
+                }}
+                sx={{
+                display: { xs: 'block', sm: 'none' },
+                '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth }
+                }}
+            >
+                <DrawerComponent handleDrawerToggle={handleDrawerToggle}/>
+            </Drawer>
         </nav>
     </Box>
   );
