@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, TextField, Typography, Grid } from '@mui/material';
+import { Box, Button, TextField, Typography, Grid, Container } from '@mui/material';
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -29,8 +29,8 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <Box py={8} bgcolor="#f9f9f9"> {/* Espaciado vertical y color de fondo */}
-      <Typography variant="h2" align="center" gutterBottom>
+    <Container sx={{ marginTop:'3rem' }}> 
+      <Typography variant="h2" sx={{ fontSize:'1.8rem', fontWeight:600, textTransform:'uppercase', marginBottom:'2rem' }}>
         Contáctanos
       </Typography>
       <Grid container spacing={4}>
@@ -109,6 +109,6 @@ export const ContactSection: React.FC = () => {
           </Box>
         </Grid>
       </Grid>
-    </Box>
+    </Container>
   );
 };

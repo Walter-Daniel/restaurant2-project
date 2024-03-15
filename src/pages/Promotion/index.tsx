@@ -5,7 +5,9 @@ import { Box, Grid, Pagination, Typography } from '@mui/material';
 
 export const PromoPage: FC = () => {
 
-    const { isLoading, data, isError, page, nexPage } = useProducts({});
+    const { isLoading, data, isError, page, nexPage } = useProducts({
+        pageSize:3
+    });
 
     const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
         nexPage(newPage);
@@ -18,7 +20,7 @@ export const PromoPage: FC = () => {
        
        <Box style={{minHeight: '85vh'}}>
             <Box padding='1rem' >
-                <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Promoción</Typography>
+                <Typography variant='h5'>Promoción</Typography>
             </Box>
             <Grid container spacing={2} direction="row">
                 {

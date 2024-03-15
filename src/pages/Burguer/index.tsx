@@ -6,7 +6,8 @@ import { Box, Grid, Pagination, Typography } from '@mui/material';
 export const BurguerPage: FC = () => {
 
     const { isLoading, data, isError, page, nexPage } = useProducts({
-        filterKey: "6554e39035611185a1cd55fe"
+        filterKey: "6554e39035611185a1cd55fe",
+        pageSize:3
     });
 
     const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
@@ -18,9 +19,9 @@ export const BurguerPage: FC = () => {
        {isLoading && <LoadingComponent />}
        {isError && <ErrorComponent />}
        
-       <Box style={{minHeight: '85vh'}}>
+       <Box >
         <Box padding='1rem' >
-            <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Hamburguesas</Typography>
+            <Typography variant='h5'>Hamburguesas</Typography>
         </Box>
         <Grid container spacing={2} direction="row">
             {
