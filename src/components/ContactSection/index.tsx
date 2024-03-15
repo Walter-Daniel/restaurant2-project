@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Grid, Container } from '@mui/material';
+import map from '/mapa.jpg'
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +19,7 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Aquí puedes implementar la lógica para enviar los datos del formulario
     console.log(formData);
-    // Puedes restablecer el estado del formulario después del envío
     setFormData({
       name: '',
       email: '',
@@ -36,8 +35,9 @@ export const ContactSection: React.FC = () => {
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
           <Box maxWidth={400} mx="auto">
-            <Typography variant="h5" gutterBottom>
-              Formulario de Contacto
+            <Typography variant="h6" fontSize='0.8rem' textTransform='uppercase' fontWeight='600' color='gray' gutterBottom>
+            ¿Listo para celebrar? <br />
+            ¡Hagamos los arreglos para la comida juntos!
             </Typography>
             <form onSubmit={handleSubmit}>
               <TextField
@@ -86,7 +86,7 @@ export const ContactSection: React.FC = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box maxWidth={400} mx="auto">
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h6" fontSize='1.2rem' textTransform='uppercase' fontWeight='600' color='gray' gutterBottom>
               Información de Contacto
             </Typography>
             <Typography variant="body1" gutterBottom>
@@ -95,17 +95,15 @@ export const ContactSection: React.FC = () => {
             <Typography variant="body1" gutterBottom>
               Correo Electrónico: info@example.com
             </Typography>
-            <Typography variant="h5" gutterBottom>
-              Redes Sociales
-            </Typography>
-            <Box display="flex" justifyContent="space-between">
-              {/* Agrega íconos o enlaces a tus redes sociales aquí */}
-            </Box>
-            <Typography variant="h5" gutterBottom>
+            <Typography variant="h6" fontSize='1.2rem' textTransform='uppercase' fontWeight='600' color='gray' gutterBottom>
               Ubicación
             </Typography>
-            {/* Agrega tu mapa de ubicación (por ejemplo, Google Maps) aquí */}
-            {/* Puedes integrar Google Maps usando un iframe o una biblioteca de mapas como react-google-maps */}
+            <img
+              src={`${map}?w=248&fit=crop&auto=format`}
+              alt="mapa de Tucumán"
+              loading="lazy"
+              style={{ width:'100%', height:'100%' }}
+            />
           </Box>
         </Grid>
       </Grid>

@@ -6,11 +6,11 @@ export const LoadingComponent: React.FC = () => {
 
       <Box
         sx={{
+          height: '40vh',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100%'
         }}
       >
         <CircularProgress size={60} />

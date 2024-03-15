@@ -10,7 +10,7 @@ export const MenuLayout = () => {
         <RestaurantHero />
         <AboutUsSection />
         <MenuComponent />
-        <Container style={{ marginTop: '4rem' }}>
+        <Container style={{ marginTop: '1rem' }}>
             <Outlet />
         </Container>
         <BannerSection />
