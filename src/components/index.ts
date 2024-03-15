@@ -1,5 +1,4 @@
 
-
 export { CardSkeleton } from './CardSkeleton/index';
 export { CardComponent } from './Card/index';
 export { ErrorComponent } from './ErrorComponent/index';
@@ -13,3 +12,5 @@ export { TableComponent } from './TableComponent/index';
 export { OrderRow } from './OrdersTableRow/index';
 export { CardDashboard } from './CardDashboard/index';
 export { AboutUsSection } from './AboutSection';
+export { TestimonialsSection } from './TestimonialSection';
+export { ContactSection } from './ContactSection';
