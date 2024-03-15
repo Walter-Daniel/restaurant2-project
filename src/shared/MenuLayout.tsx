@@ -1,7 +1,7 @@
 import { Container } from '@mui/material';
 import { MenuComponent } from '../components/MenuComponent';
 import { Outlet } from 'react-router-dom';
-import { AboutUsSection, ContactSection, RestaurantHero, TestimonialsSection } from '../components';
+import { AboutUsSection, BannerSection, ContactSection, RestaurantHero, TestimonialsSection } from '../components';
 import { Footer } from './footer';
 
 export const MenuLayout = () => {
@@ -13,6 +13,7 @@ export const MenuLayout = () => {
         <Container style={{ marginTop: '4rem' }}>
             <Outlet />
         </Container>
+        <BannerSection />
         <TestimonialsSection />
         <ContactSection />
         <Footer />

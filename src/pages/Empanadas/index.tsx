@@ -6,7 +6,8 @@ import { Box, Grid, Pagination, Typography } from '@mui/material';
 export const EmpanadaPage: FC = () => {
 
     const { isLoading, data, isError, page, nexPage } = useProducts({
-        filterKey: "635170dcc5a32a62d410b13e"
+        filterKey: "635170dcc5a32a62d410b13e",
+        pageSize: 3
     });
 
     const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
@@ -18,9 +19,9 @@ export const EmpanadaPage: FC = () => {
        {isLoading && <LoadingComponent />}
        {isError && <ErrorComponent />}
        
-       <Box style={{minHeight: '85vh'}}>
+       <Box>
         <Box padding='1rem' >
-            <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Empanadas</Typography>
+            <Typography variant='h5'>Empanadas</Typography>
         </Box>
         <Grid container spacing={2} direction="row">
             {

@@ -7,7 +7,7 @@ export const SandwichPage: FC = () => {
 
     const { isLoading, data, isError, page, nexPage } = useProducts({
         filterKey: "63517341c3c4679da104dd3f",
-        pageSize: 6
+        pageSize: 3
     });
     
     const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
@@ -17,9 +17,9 @@ export const SandwichPage: FC = () => {
     <>
        {isLoading && <LoadingComponent />}
        {isError && <ErrorComponent />}
-       <Box style={{minHeight: '85vh'}}>
+       <Box >
             <Box padding='1rem' >
-                <Typography  sx={{ fontSize:{xs:'2.5rem', md:'3rem'} }}>Sandwiches</Typography>
+                <Typography variant='h5'>Sandwiches</Typography>
             </Box>
             <Grid container spacing={2} direction="row">
                 {

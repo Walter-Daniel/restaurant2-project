@@ -1,4 +1,4 @@
-import { Box, Breadcrumbs, Link } from '@mui/material';
+import { Box, Breadcrumbs, Container, Link } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 
@@ -27,23 +27,24 @@ const menuLinks = [
 
 export const MenuComponent = () => {
   return (
-    <Box display='flex' justifyContent='center' >
-        <Breadcrumbs aria-label="breadcrumb">
-
-        {
-          menuLinks.map(item => (
-            <Link
-                underline="hover"
-                component={RouterLink}
-                color="inherit"
-                to={item.link}
-                key={item.link}
-            >
-                {item.name}
-            </Link>
-          ))
-        }
-        </Breadcrumbs>
-  </Box>
+    <Container sx={{ marginTop:'3rem' }}>
+      <Box display='flex' justifyContent='center' bgcolor='black' sx={{ padding:'1rem' }} color='white'>
+          <Breadcrumbs aria-label="breadcrumb" sx={{ color:'white' }}>
+          {
+            menuLinks.map(item => (
+              <Link
+                  underline="hover"
+                  component={RouterLink}
+                  color="white"
+                  to={item.link}
+                  key={item.link}
+              >
+                  {item.name}
+              </Link>
+            ))
+          }
+          </Breadcrumbs>
+      </Box>
+    </Container>
   )
 }

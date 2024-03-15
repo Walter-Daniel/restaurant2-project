@@ -14,3 +14,4 @@ export { CardDashboard } from './CardDashboard/index';
 export { AboutUsSection } from './AboutSection';
 export { TestimonialsSection } from './TestimonialSection';
 export { ContactSection } from './ContactSection';
+export { BannerSection } from './Banner';
