@@ -8,6 +8,9 @@ export const productsApi = {
     getAll: function(params: URLSearchParams){
         return instance.get(`/products`, {params})
     },
+    getPromo: function(params: URLSearchParams){
+        return instance.get(`/promos`, {params})
+    },
     createProduct: function(token:string, product:ProductLike){
         return instance.post('/products', product ,{
             headers:{
