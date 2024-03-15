@@ -1,42 +1,29 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
 import { useProducts } from '../../hooks';
-import { CardComponent, ErrorComponent, LoadingComponent } from '../../components';
-import { Box, Grid, Pagination, Typography } from '@mui/material';
+import { ErrorComponent, LoadingComponent, ProductsSection } from '../../components';
+import { Box } from '@mui/material';
 
 export const EmpanadaPage: FC = () => {
 
-    const { isLoading, data, isError, page, nexPage } = useProducts({
+    const { isLoading, data, isError, page, pageChange } = useProducts({
         filterKey: "635170dcc5a32a62d410b13e",
         pageSize: 3
     });
 
-    const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
-        nexPage(newPage);
-    };
-
   return (
-    <>
-       {isLoading && <LoadingComponent />}
-       {isError && <ErrorComponent />}
-       
-       <Box>
-        <Box padding='1rem' >
-            <Typography variant='h5'>Empanadas</Typography>
-        </Box>
-        <Grid container spacing={2} direction="row">
-            {
-            data.products.map((product)=>(
-                <Grid item xs={12} sm={6} md={4}  key={product._id} sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
-                    <CardComponent name={product.name} price={product.price} detail={product.detail} id={product._id} key={product._id}/>
-                </Grid>
-            ))
-            }
-        </Grid>
-       </Box>
-       <Box display='flex' justifyContent='center' padding='1rem'>
-            <Pagination page={page} color="primary" count={data.totalPages} onChange={handleChangePage}/>
-        </Box>
-    
-    </>
+    <Box sx={{ minHeight: '50vh' }}>
+        {isLoading ? <LoadingComponent /> 
+                :(
+                    <ProductsSection  
+                    title='Empanadas'
+                    page={page}
+                    products={data.products}
+                    totalPages={data.totalPages}
+                    pageChange={pageChange}
+                    />
+                )
+        }
+        {isError && <ErrorComponent />}
+    </Box>
   )
 }

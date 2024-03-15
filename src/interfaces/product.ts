@@ -3,7 +3,6 @@ export interface Category {
   name: string;
 }
 
-
 export interface Product {
     _id: string;
     name: string;
@@ -17,7 +16,6 @@ export interface Product {
  export interface ProductsResponse {
     message: string;
     products: Product[];
-    promoProducts: Product[];
     totalProducts: number;
     totalPages: number;
 }

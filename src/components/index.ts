@@ -15,3 +15,4 @@ export { AboutUsSection } from './AboutSection';
 export { TestimonialsSection } from './TestimonialSection';
 export { ContactSection } from './ContactSection';
 export { BannerSection } from './Banner';
+export { ProductsSection } from './ProductsSection';

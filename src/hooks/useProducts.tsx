@@ -20,16 +20,15 @@ const getProducts = async({filterKey = '', page = 1, pageSize = 10}: Options) =>
     params.append('pageSize', pageSize.toString());
 
     const response:AxiosResponse<ProductsResponse> = await productsApi.getAll(params);
-    const {products, promoProducts, totalProducts, totalPages} = response.data;
-    return {products, promoProducts, totalProducts, totalPages};
+    const {products, totalProducts, totalPages} = response.data;
+    return {products, totalProducts, totalPages};
 }
 
 export const useProducts = ({ filterKey, pageSize }: Options) => {
 
-
     const [page, setpage] = useState(1);
 
-    const { isLoading, error, isError, data = { products: [], promoProducts: [], totalProducts: number, totalPages:1} } = useQuery({
+    const { isLoading, error, isError, data = { products: [], totalProducts: number, totalPages:1} } = useQuery({
         queryKey: ['products', {filterKey, page, pageSize}],
         queryFn: () => getProducts({filterKey, page, pageSize}),
         staleTime: 1000*60*60
@@ -37,7 +36,6 @@ export const useProducts = ({ filterKey, pageSize }: Options) => {
     });
 
     const pageChange = (newPage:number) => {
-        // if(data?.products.length === 0) return;
         setpage(newPage)
     };
     
@@ -50,6 +48,6 @@ export const useProducts = ({ filterKey, pageSize }: Options) => {
         //getter
         page,
         //methods
-        nexPage: pageChange
+        pageChange
     }
 }

@@ -1,39 +1,30 @@
-import { FC, ChangeEvent } from 'react';
+import { FC } from 'react';
 import { useProducts } from '../../hooks';
-import { CardComponent, ErrorComponent, LoadingComponent } from '../../components';
-import { Box, Grid, Pagination, Typography } from '@mui/material';
+import { ErrorComponent, LoadingComponent, ProductsSection } from '../../components';
+import { Box,  } from '@mui/material';
 
 export const SandwichPage: FC = () => {
 
-    const { isLoading, data, isError, page, nexPage } = useProducts({
+    const { isLoading, data, isError, page, pageChange } = useProducts({
         filterKey: "63517341c3c4679da104dd3f",
         pageSize: 3
     });
     
-    const handleChangePage = (event: ChangeEvent<unknown>, newPage:number) => {
-        nexPage(newPage);
-    };
+    
   return (
-    <>
-       {isLoading && <LoadingComponent />}
+    <Box sx={{ minHeight: '50vh' }}>
+       {isLoading ? <LoadingComponent /> 
+                  :(
+                   <ProductsSection  
+                    title='Sandwiches'
+                    page={page}
+                    products={data.products}
+                    totalPages={data.totalPages}
+                    pageChange={pageChange}
+                    />
+                  )
+       }
        {isError && <ErrorComponent />}
-       <Box >
-            <Box padding='1rem' >
-                <Typography variant='h5'>Sandwiches</Typography>
-            </Box>
-            <Grid container spacing={2} direction="row">
-                {
-                    data.products.map((product)=>(
-                        <Grid item xs={12} sm={6} md={4}  key={product._id} sx={{ width: '100%', display:'flex', justifyContent:'center' }}>
-                            <CardComponent name={product.name} price={product.price} detail={product.detail} id={product._id} key={product._id}/>
-                        </Grid>
-                    ))
-                }
-            </Grid>
-       </Box> 
-        <Box display='flex' justifyContent='center' padding='1rem'>
-            <Pagination page={page} color="primary" count={data.totalPages} onChange={handleChangePage}/>
-        </Box>
-    </>
+    </Box>
   )
 }
