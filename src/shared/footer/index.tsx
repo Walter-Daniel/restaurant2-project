@@ -4,11 +4,11 @@ import { styled } from '@mui/system';
 
 
 const StyledFooter = styled(Box)(({ theme }) => ({
-    backgroundColor: '#333',
+    backgroundColor: '#000',
     color: '#fff',
     padding: '16px',
     textAlign: 'center',
-    // position: 'fixed',
+    marginTop: '2rem',
     bottom: 0,
     width: '100%',
   
@@ -24,16 +24,16 @@ export const Footer = () => {
   return (
     <StyledFooter>
       <Typography variant="body2">
-        Copyright © 2023 - Todos los derechos reservados.
+        Copyright © 2024 - Todos los derechos reservados.
       </Typography>
       <Box mt={1}>
-        <Link href="https://www.facebook.com/" className="socialLink">
+        <Link href="https://www.facebook.com/" className="socialLink" target="_blank" rel="noopener noreferrer">
           <Facebook />
         </Link>
-        <Link href="https://www.instagram.com/" className="socialLink">
+        <Link href="https://www.instagram.com/" className="socialLink" target="_blank" rel="noopener noreferrer">
           <Instagram />
         </Link>
-        <Link href="https://twitter.com/" className="socialLink">
+        <Link href="https://twitter.com/" className="socialLink" target="_blank" rel="noopener noreferrer">
           <Twitter />
         </Link>
       </Box>
