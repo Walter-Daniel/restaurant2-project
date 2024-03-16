@@ -1,6 +1,6 @@
-import { FC } from "react"
-import { Button, Card, CardActions, CardContent, CardMedia, Typography } from "@mui/material"
-import { useAppSelector } from "../../redux/hooks";
+import { FC } from 'react';
+import { Button, Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { useAppSelector } from '../../redux/hooks';
 import pizza from '../../assets/pizzas/peperoni.jpg'
 
 type Props = {

@@ -5,10 +5,6 @@ import { Link as RouterLink } from 'react-router-dom';
 const menuLinks = [
   {
     link: '/',
-    name: 'Promociones'
-  },
-  {
-    link: '/empanadas',
     name: 'Empanadas'
   },
   {

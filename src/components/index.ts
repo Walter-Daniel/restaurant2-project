@@ -16,3 +16,4 @@ export { TestimonialsSection } from './TestimonialSection';
 export { ContactSection } from './ContactSection';
 export { BannerSection } from './Banner';
 export { ProductsSection } from './ProductsSection';
+export { CardPromotionComponent } from './CardPromotion';
