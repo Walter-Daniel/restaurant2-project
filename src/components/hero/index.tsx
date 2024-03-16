@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Typography, Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom'; 
 
-import image2 from '../../assets/pizzas/pizza.png';
+import image2 from '/pizza1.png';
 
 export const RestaurantHero: React.FC = () => {
   const theme = useTheme();
@@ -82,7 +82,7 @@ export const RestaurantHero: React.FC = () => {
       </Grid>
       <Grid item xs={12} sm={6} style={styles.heroContent} >
         <Box sx={styles.rightSection} width='100%' height='100%'>
-          <img src={image2} alt="Restaurant Image 2" style={{height:'80vh', width: '100%', objectFit:'contain', filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5))' }} />
+          <img src={image2} alt="Restaurant Image 2" loading='lazy' style={{height:'80vh', width: '100%', objectFit:'contain', filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.5))' }} />
         </Box>
       </Grid>
     </Grid>

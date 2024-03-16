@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
+import { useNotification } from '../../context/notificationContext/useNotification';
+
 import { Box, Button, TextField, Typography, Grid, Container } from '@mui/material';
+
 import map from '/mapa.jpg'
 
 export const ContactSection: React.FC = () => {
+
+  const { getSuccess } = useNotification();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,6 +26,7 @@ export const ContactSection: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+    getSuccess('Mensaje enviado con éxito, pronto nos contactaremos contigo!');
     setFormData({
       name: '',
       email: '',
