@@ -20,6 +20,7 @@ import { getCellContent } from "../../helpers/getCellContent";
 import { Category } from "../../interfaces/category";
 import { useState } from "react";
 import { SAlert } from "../../helpers/SWAlert";
+import { Product } from '../../interfaces/dashboard';
 
 
 type FieldKey<T> = keyof T;
@@ -113,7 +114,7 @@ export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>
                 ))}
                 <StyledTableCell align="right">
                   <Stack direction="row" spacing={1} justifyContent='flex-end'>
-                    <ModalComponent children={<ProductsForm />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
+                    <ModalComponent children={<ProductsForm values={typeof row === Product} />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
                     <Button style={styles.delete} onClick={() => handleRowData(row)} ><DeleteIcon /></Button>
                   </Stack>
                 </StyledTableCell>

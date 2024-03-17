@@ -1,5 +1,5 @@
-import { useFormik } from "formik";
-import { productValidation } from "../../utilities/ProductValidation";
+import { useFormik } from 'formik';
+import { productValidation } from '../../utilities/ProductValidation';
 import {
   TextField,
   MenuItem,
@@ -10,11 +10,10 @@ import {
   FormControl,
   InputLabel,
   Typography,
-} from "@mui/material";
-import { useCategories, useProductsMutation } from "../../hooks";
+} from '@mui/material';
+import { useCategories, useProductsMutation } from '../../hooks';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
-
+import { Product } from '../../interfaces/product';
 
 interface Props  {
   _id?: string;
@@ -26,24 +25,29 @@ interface Props  {
   promo: boolean,
 }
 
-export const ProductsForm: React.FC = () => {
+// interface EditFormProps {
+//   values?: Props | undefined
+// }
+
+export const ProductsForm: React.FC<Product> = ({...values}) => {
+
+  console.log(values)
 
   const { isError, isLoading, data } = useCategories();
   const productMutation = useProductsMutation();
 
   const formik = useFormik({
     initialValues: {
-      name: 'Prueba',
-      detail: 'HOLA ASLJDLKASJ',
-      price: 3000,
-      category:'',
-      active: false,
-      promo: false,
+      name: values ? values.name : 'Producto Prueba',
+      detail: values ? values.detail : 'Esta es la descripción del producto.',
+      price: values ? values.price : 3000,
+      category: values ? values.category : '',
+      active: values ? values.active : false,
+      promo: values ? values.promo : false,
       // image: File,
     },
     validationSchema: productValidation,
-    onSubmit: (values:Props, {resetForm}) => {
-      // dispatch(fetchProducts(values));
+    onSubmit: (values:Props, {resetForm}) => {    
       productMutation.mutate(values)
       resetForm();
     },
