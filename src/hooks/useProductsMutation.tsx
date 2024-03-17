@@ -1,15 +1,13 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { uploadProductService } from "../services/product.services"
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { uploadProductService } from "../services/product.services";
 import { Product } from "../interfaces/product";
 
-
-const categoryToFind  :{ [key: string]: string }= {
-    "635170dcc5a32a62d410b13e": "Empanadas",
-    "6554e39035611185a1cd55fe": "Hamburguesas",
-    "63516f6fc5a32a62d410b13c": "Pizzas",
-    "63517341c3c4679da104dd3f": "Sandwiches",
+interface ProductsProps {
+    products: Product[],
+    totalPages: number;
+    totalProducts: number;
 }
-
 
 export const useProductsMutation = () => {
 
@@ -18,63 +16,75 @@ export const useProductsMutation = () => {
     const productMutation = useMutation({
         mutationFn: uploadProductService,
 
-        onMutate: (product) => {
-    
-            const optimistProduct = {_id: 'mdmddmdm', ...product}
-            //almacenar el producto en el cache del query client
-            queryClient.setQueryData<Product[]>(
-                ['products', {}],
-                (old) =>{
-                    if(!old) return [optimistProduct]
+        onMutate: async (product) => {
+            // Optimistic product
+            const optimisticProduct = { _id: 'ID temporario', ...product };
 
-                    return [optimistProduct, ...old]
+            // Almacenar producto en el cache de query client
+            queryClient.setQueryData<ProductsProps>(
+                ['products', { filterKey: product.category, page: 1, pageSize:3 }],
+                (oldData) => {
+                    if (!oldData) return { products: [optimisticProduct], totalPages: 0, totalProducts: 0 };
+                    return {
+                        ...oldData,
+                        products: [optimisticProduct, ...oldData.products],
+                        totalProducts: oldData.totalProducts + 1
+                    };
                 }
             );
-            
-            return {
-                optimistProduct
-            }
-        
+
+            //almacenar producto en tabla
+            queryClient.setQueryData<ProductsProps>(
+                ['products', { page: 1 }],
+                (oldData) => {
+                    if (!oldData) return { products: [optimisticProduct], totalPages: 0, totalProducts: 0 };
+                    return {
+                        ...oldData,
+                        products: [optimisticProduct, ...oldData.products],
+                        totalProducts: oldData.totalProducts + 1
+                    };
+                }
+            );
+
+            return { optimisticProduct };
         },
 
         onSuccess: (product, _ , context) => {
-            
-            queryClient.setQueryData<Product[]>(
-                ['products', {}],
-                (old) =>{
-                    if(!old) return [product]
-                    
-                    const categoryID= product.category.toString();
-                    const nameCategory = categoryToFind[categoryID]
 
-                    product.category = {
-                        _id: categoryID,
-                        name: nameCategory
-                    }
-
-                    return old.map( cacheProduct => {
-                        return cacheProduct._id === context?.optimistProduct._id ? product : cacheProduct;
-                    })
+            queryClient.setQueryData<ProductsProps>(
+                ['products', {"filterKey": product.category, "page":1, "pageSize":3 }],
+                (oldData) => {
+                    if (!oldData) return;
+                    return {
+                        ...oldData,
+                        products: oldData.products.map(cacheProduct => {
+                            return cacheProduct._id === context.optimisticProduct._id ? product : cacheProduct;
+                        })
+                    };
                 }
             )
 
-        },
-
-        onError(error, variables, context) {
-
-            console.log({error, variables, context})
-
-            queryClient.setQueryData<Product[]>(
-                ['products', { filterKey: variables.category }],
-                (old) =>{
-                    if(!old) return [];
-                    return old.filter( cacheProduct => {
-                        return cacheProduct._id !== context?.optimistProduct._id
-                    })
+            //Almacenar producto en tabla
+            queryClient.setQueryData<ProductsProps>(
+                ['products', { page: 1 }],
+                (oldData) => {
+                    if (!oldData) return;
+                    return {
+                        ...oldData,
+                        products: oldData.products.map(cacheProduct => {
+                            return cacheProduct._id === context.optimisticProduct._id ? product : cacheProduct;
+                        })
+                    };
                 }
-            )
+            );
         },
+
+        onError(error, variables, context){
+            console.log(error, variables, context);
+        }
+
       });
+      
 
       return productMutation;
 }
