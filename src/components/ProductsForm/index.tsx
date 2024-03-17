@@ -13,17 +13,11 @@ import {
 } from "@mui/material";
 import { useCategories, useProductsMutation } from "../../hooks";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Product } from "../../interfaces/product";
 
 
-const category  :{ [key: string]: string }= {
-  "635170dcc5a32a62d410b13e": "Empanadas",
-  "6554e39035611185a1cd55fe": "Hamburguesas",
-  "63516f6fc5a32a62d410b13c": "Pizzas",
-  "63517341c3c4679da104dd3f": "Sandwiches",
-}
 
 interface Props  {
+  _id?: string;
   name: string,
   detail: string,
   price: number,
@@ -109,10 +103,10 @@ export const ProductsForm: React.FC = () => {
                 onBlur={formik.handleBlur}
               >
                 {
-                  Object.entries(category).map(([key, value]) => (
-                    <MenuItem key={key} value={key}>
-                    {value}
-                  </MenuItem>
+                  data.map(item => (
+                    <MenuItem key={item._id} value={item._id}>
+                      {item.name}
+                    </MenuItem>
                   ))
                 }
                 

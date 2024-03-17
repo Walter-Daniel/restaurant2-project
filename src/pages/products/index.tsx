@@ -4,7 +4,7 @@ import { useProducts } from '../../hooks/useProducts';
 import { Product } from '../../interfaces/product';
 
 import { styled } from '@mui/material/styles';
-import { Grid, Box, Paper, Typography, Stack } from '@mui/material';
+import { Grid, Box, Paper, Typography, Stack, Alert } from '@mui/material';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -38,10 +38,11 @@ export const Products = () => {
         <Grid item xs={12}>
           <Item>
             {productsQuery.isLoading ? <LoadingComponent />
-                                     :productsQuery.data ? <TableComponent<Product> data={productsQuery.data.products} columns={productColumns} />
-                                     :<ErrorComponent />
+                                     :(!productsQuery.data) ? <Alert variant="filled" severity="warning">No hay productos registrados</Alert>
+                                     :<TableComponent<Product> data={productsQuery.data.products} columns={productColumns} />
           
             } 
+            {productsQuery.isError&&(<ErrorComponent />)}
           </Item>
         </Grid>
       </Grid>

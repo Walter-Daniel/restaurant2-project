@@ -8,7 +8,7 @@ export interface Product {
     name: string;
     detail: string;
     price: number;
-    category: Category;
+    category: string;
     active: boolean;
     promo: boolean;
   }
