@@ -19,8 +19,9 @@ import { User } from "../../interfaces/user";
 import { getCellContent } from "../../helpers/getCellContent";
 import { Category } from "../../interfaces/category";
 import { useState } from "react";
-import { SAlert } from "../../helpers/SWAlert";
+// import { SAlert } from "../../helpers/SWAlert";
 import { Product } from "../../interfaces/product";
+import { useDeleteProductMutation } from "../../hooks/useProductsMutation";
 // import { Product } from '../../interfaces/dashboard';
 
 
@@ -77,22 +78,27 @@ const styles = {
 };
 
 export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>) => {
+  const deleteMutation = useDeleteProductMutation();
 
   const [rowData, setRowData] = useState<DataObject | null>(null);
 
   const handleRowData = (rowData:DataObject) => {
     setRowData(rowData);
-    SAlert({ 
-      title: "Deseas eliminar el producto?", 
-      text: "Si lo eliminas, ya no tendrás acceso a él.",
-      icon: "question",
-      confirmBtn: "Confirmar",
-      titleConfirm: "Producto eliminado",
-      textConfirm: "Producto ha sido eliminado con éxito",
-    });
+    // SAlert({ 
+    //   title: "Deseas eliminar el producto?", 
+    //   text: "Si lo eliminas, ya no tendrás acceso a él.",
+    //   icon: "question",
+    //   confirmBtn: "Confirmar",
+    //   titleConfirm: "Producto eliminado",
+    //   textConfirm: "Producto ha sido eliminado con éxito",
+    // });
+    if(rowData){
+      console.log(rowData._id)
+      deleteMutation.mutate(rowData._id)
+    }
   }
 
-  console.log(rowData, 'producto a editar')
+  console.log(rowData?._id, 'a eliminar')
   return (
     <>
       <TableContainer component={Paper}>
