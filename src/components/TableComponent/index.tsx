@@ -13,14 +13,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import { ModalComponent } from "../ModalComponent";
 import { ProductsForm } from "../ProductsForm";
-import { Product } from "../../interfaces/product";
+
 import { Order } from "../../interfaces/order";
 import { User } from "../../interfaces/user";
 import { getCellContent } from "../../helpers/getCellContent";
 import { Category } from "../../interfaces/category";
 import { useState } from "react";
 import { SAlert } from "../../helpers/SWAlert";
-import { Product } from '../../interfaces/dashboard';
+import { Product } from "../../interfaces/product";
+// import { Product } from '../../interfaces/dashboard';
 
 
 type FieldKey<T> = keyof T;
@@ -114,7 +115,9 @@ export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>
                 ))}
                 <StyledTableCell align="right">
                   <Stack direction="row" spacing={1} justifyContent='flex-end'>
-                    <ModalComponent children={<ProductsForm values={typeof row === Product} />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
+                    <ModalComponent  title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}>
+                    <ProductsForm values={row as Product} />
+                    </ModalComponent>
                     <Button style={styles.delete} onClick={() => handleRowData(row)} ><DeleteIcon /></Button>
                   </Stack>
                 </StyledTableCell>

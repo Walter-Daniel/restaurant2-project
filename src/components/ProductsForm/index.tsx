@@ -11,11 +11,11 @@ import {
   InputLabel,
   Typography,
 } from '@mui/material';
-import { useCategories, useProductsMutation } from '../../hooks';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Product } from '../../interfaces/product';
+import { useCategories, 
+  // useProductsMutation 
+} from '../../hooks';
 
-interface Props  {
+interface ProducsLike  {
   _id?: string;
   name: string,
   detail: string,
@@ -23,33 +23,33 @@ interface Props  {
   category: string,
   active: boolean,
   promo: boolean,
+  image: string;
 }
 
-// interface EditFormProps {
-//   values?: Props | undefined
-// }
+interface Props {
+  values?: ProducsLike
+}
 
-export const ProductsForm: React.FC<Product> = ({...values}) => {
-
-  console.log(values)
+export const ProductsForm: React.FC<Props> = ({values}) => {
 
   const { isError, isLoading, data } = useCategories();
-  const productMutation = useProductsMutation();
+  // const productMutation = useProductsMutation();
 
   const formik = useFormik({
     initialValues: {
-      name: values ? values.name : 'Producto Prueba',
-      detail: values ? values.detail : 'Esta es la descripción del producto.',
-      price: values ? values.price : 3000,
-      category: values ? values.category : '',
+      name: values ? values.name : '',
+      detail: values ? values.detail : '',
+      price: values ? values.price : 0,
+      category: values ? values.category : '63516f6fc5a32a62d410b13c',
       active: values ? values.active : false,
       promo: values ? values.promo : false,
-      // image: File,
+      image: values ? values.image: ''
     },
     validationSchema: productValidation,
-    onSubmit: (values:Props, {resetForm}) => {    
-      productMutation.mutate(values)
-      resetForm();
+    onSubmit: (values) => {  
+      console.log(values)  
+      // productMutation.mutate(values)
+      // resetForm();
     },
   });
 
@@ -76,6 +76,8 @@ export const ProductsForm: React.FC<Product> = ({...values}) => {
               value={formik.values.detail}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              error={!!formik.errors.detail && formik.touched.detail}
+              helperText={formik.touched.detail && formik.errors.detail}
               multiline
               rows={4}
             />
@@ -105,6 +107,7 @@ export const ProductsForm: React.FC<Product> = ({...values}) => {
                 value={formik.values.category}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                
               >
                 {
                   data.map(item => (
@@ -117,6 +120,17 @@ export const ProductsForm: React.FC<Product> = ({...values}) => {
               </Select>
             </FormControl>
            )}
+           <TextField
+              label="Imagen"
+              name="image"
+              variant="outlined"
+              margin="normal"
+              value={formik.values.image}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={!!formik.errors.image && formik.touched.image}
+              helperText={formik.touched.image && formik.errors.image}
+            />
             <FormControlLabel
               control={<Checkbox name="active" />}
               label="Activo"
@@ -132,26 +146,6 @@ export const ProductsForm: React.FC<Product> = ({...values}) => {
               onBlur={formik.handleBlur}
             />
           </div>
-          <Button
-            component="label"
-            role={undefined}
-            variant="contained"
-            tabIndex={-1}
-            startIcon={<CloudUploadIcon />}
-            htmlFor="image-upload"
-            sx={{ backgroundColor:'black', margin:'1rem 0' }}
-            fullWidth
-          >
-            Seleccionar imagen
-          <input
-            accept="image/*"
-            id="image-upload"
-            type="file"
-            hidden
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          </Button>
           <Button variant="contained" type="submit" fullWidth>
             Enviar
           </Button>
