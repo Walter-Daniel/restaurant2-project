@@ -11,6 +11,7 @@ export interface Product {
     category: string;
     active: boolean;
     promo: boolean;
+    image: string;
   }
   
  export interface ProductsResponse {

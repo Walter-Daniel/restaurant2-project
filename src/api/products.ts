@@ -17,5 +17,12 @@ export const productsApi = {
                 'x-token': token
             },
         })
+    },
+    deleteProduct: function(id:string, token:string){
+        return instance.delete(`/products/${id}`, {
+            headers:{
+                'x-token': token
+            }, 
+        })
     }
 };

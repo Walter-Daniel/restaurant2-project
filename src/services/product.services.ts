@@ -15,6 +15,7 @@ export interface ProductLike {
     category: string;
     active: boolean;
     promo: boolean;
+    image:string;
 }
   
 export const uploadProductService = async(productToUpload: ProductLike)=>{
@@ -23,7 +24,16 @@ export const uploadProductService = async(productToUpload: ProductLike)=>{
     if(!token) throw new Error('No existe token');
     const response: AxiosResponse<ResponseSuccess> = await productsApi.createProduct(token, productToUpload);
     const { product } = response.data;
-    console.log({product}, 'desde upload')
     return product
    
+}
+
+export const deleteProductService = async(id: string) => {
+
+    const token = localStorage.getItem('token');
+    if(!token) throw new Error('No existe token');
+    await productsApi.deleteProduct(id, token);
+    console.log('holaaaaaaaaaaaaaaa', id)
+    return
+
 }

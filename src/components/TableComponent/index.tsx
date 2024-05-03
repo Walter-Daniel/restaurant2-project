@@ -13,14 +13,16 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import { ModalComponent } from "../ModalComponent";
 import { ProductsForm } from "../ProductsForm";
-import { Product } from "../../interfaces/product";
+
 import { Order } from "../../interfaces/order";
 import { User } from "../../interfaces/user";
 import { getCellContent } from "../../helpers/getCellContent";
 import { Category } from "../../interfaces/category";
 import { useState } from "react";
-import { SAlert } from "../../helpers/SWAlert";
-import { Product } from '../../interfaces/dashboard';
+// import { SAlert } from "../../helpers/SWAlert";
+import { Product } from "../../interfaces/product";
+import { useDeleteProductMutation } from "../../hooks/useProductsMutation";
+// import { Product } from '../../interfaces/dashboard';
 
 
 type FieldKey<T> = keyof T;
@@ -76,22 +78,27 @@ const styles = {
 };
 
 export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>) => {
+  const deleteMutation = useDeleteProductMutation();
 
   const [rowData, setRowData] = useState<DataObject | null>(null);
 
   const handleRowData = (rowData:DataObject) => {
     setRowData(rowData);
-    SAlert({ 
-      title: "Deseas eliminar el producto?", 
-      text: "Si lo eliminas, ya no tendrás acceso a él.",
-      icon: "question",
-      confirmBtn: "Confirmar",
-      titleConfirm: "Producto eliminado",
-      textConfirm: "Producto ha sido eliminado con éxito",
-    });
+    // SAlert({ 
+    //   title: "Deseas eliminar el producto?", 
+    //   text: "Si lo eliminas, ya no tendrás acceso a él.",
+    //   icon: "question",
+    //   confirmBtn: "Confirmar",
+    //   titleConfirm: "Producto eliminado",
+    //   textConfirm: "Producto ha sido eliminado con éxito",
+    // });
+    if(rowData){
+      console.log(rowData._id)
+      deleteMutation.mutate(rowData._id)
+    }
   }
 
-  console.log(rowData, 'producto a editar')
+  console.log(rowData?._id, 'a eliminar')
   return (
     <>
       <TableContainer component={Paper}>
@@ -114,7 +121,9 @@ export const TableComponent = <T extends DataObject>({ data, columns }: Props<T>
                 ))}
                 <StyledTableCell align="right">
                   <Stack direction="row" spacing={1} justifyContent='flex-end'>
-                    <ModalComponent children={<ProductsForm values={typeof row === Product} />} title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}/>
+                    <ModalComponent  title='Editar producto' btnName={<CreateIcon />} btnStyle='text' isStyled={styles.update}>
+                    <ProductsForm values={row as Product} />
+                    </ModalComponent>
                     <Button style={styles.delete} onClick={() => handleRowData(row)} ><DeleteIcon /></Button>
                   </Stack>
                 </StyledTableCell>
